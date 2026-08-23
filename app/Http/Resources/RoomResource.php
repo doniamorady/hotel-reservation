@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\BedResource;
 
 class RoomResource extends JsonResource
 {
@@ -18,7 +19,9 @@ class RoomResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'status' => $this->status,
-            'image' => $this->image
+            'image' => $this->image,
+            'capacity' => $this->capacity,
+            'beds' => BedResource::collection($this->whenLoaded('beds'))
         ];
     }
 }

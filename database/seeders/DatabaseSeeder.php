@@ -6,7 +6,6 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
@@ -27,12 +26,24 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('rooms')->insert([
-            ['name' => '001', 'status' => true],
-            ['name' => '002', 'status' => false],
-            ['name' => '003', 'status' => true],
-            ['name' => '004', 'status' => false],
-            ['name' => '005', 'status' => true],
+            ['name' => '001', 'status' => true, 'capacity' => 2],
+            ['name' => '002', 'status' => false, 'capacity' => 2],
+            ['name' => '003', 'status' => true, 'capacity' => 3],
+            ['name' => '004', 'status' => false, 'capacity' => 1],
+            ['name' => '005', 'status' => true, 'capacity' => 1],
         ]);
+        
+         // simple fixed bed-room assignments (bed_room pivot)
+        DB::table('bed_room')->insert([
+            ['bed_id' => 1, 'room_id' => 1],
+            ['bed_id' => 2, 'room_id' => 1],
+            ['bed_id' => 3, 'room_id' => 2],
+            ['bed_id' => 1, 'room_id' => 3],
+            ['bed_id' => 3, 'room_id' => 3],
+            ['bed_id' => 2, 'room_id' => 4],
+            ['bed_id' => 1, 'room_id' => 5],
+        ]);
+
 
         DB::table('bookings')->insert([
             [
@@ -68,5 +79,7 @@ class DatabaseSeeder extends Seeder
             'max_nights' => 10,
             'max_guests' => 5,
         ]);
+
+       
     }
 }

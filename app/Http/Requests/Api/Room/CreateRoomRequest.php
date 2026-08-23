@@ -25,7 +25,8 @@ class CreateRoomRequest extends FormRequest
         return [
             'name' => ['required'],
             'image' => ['nullable', 'string'],
-            'status' => ['sometimes', 'boolean']
+            'status' => ['sometimes', 'boolean'],
+            'capacity' => ['required', 'integer', 'min:1']
         ];
     }
 }

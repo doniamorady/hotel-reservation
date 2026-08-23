@@ -25,7 +25,8 @@ class UpdateRoomRequest extends FormRequest
         return [
             'name' => ['sometimes', 'string'],
             'status' => ['sometimes', 'boolean'],
-            'image' => ['sometimes', 'string']
+            'image' => ['sometimes', 'string'],
+            'capacity' => ['sometimes', 'integer', 'min:1'],
         ];
     }
 }
