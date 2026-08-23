@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->string('breakfast_price');
-            $table->unsignedInteger('max_nights');
-            $table->unsignedInteger('max_guests');
+            $table->unsignedInteger('max_nights')->default(10);
+            $table->unsignedInteger('max_guests')->default(4);
             $table->timestamps();
         });
     }
