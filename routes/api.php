@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\BedController;
-use App\Http\Controllers\RoomController;
-use App\Http\Controllers\SettingController;
+use App\Http\Controllers\Api\RoomController;
+use App\Http\Controllers\Api\SettingController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,4 +31,12 @@ Route::prefix('rooms')->group(function(){
     Route::get('/{room}',[RoomController::class, 'show']);
     Route::put('/{room}',[RoomController::class, 'update']);
     Route::delete('/{room}',[RoomController::class, 'destroy']);
+});
+
+Route::prefix('users')->group(function(){
+    Route::get('/', [UserController::class, 'index']);
+    Route::post('/', [UserController::class, 'store']);
+    Route::get('/{user}', [UserController::class, 'show']);
+    Route::put('/{user}', [UserController::class, 'update']);
+    Route::delete('/{user}', [UserController::class, 'destroy']);
 });
