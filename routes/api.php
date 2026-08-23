@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BedController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,4 +22,12 @@ Route::prefix('beds')->group(function(){
 Route::prefix('settings')->group(function(){
    Route::get('/',[SettingController::class, 'index']); 
    Route::put('/',[SettingController::class, 'update']); 
+});
+
+Route::prefix('rooms')->group(function(){
+    Route::get('/',[RoomController::class, 'index']);
+    Route::post('/',[RoomController::class, 'store']);
+    Route::get('/{room}',[RoomController::class, 'show']);
+    Route::put('/{room}',[RoomController::class, 'update']);
+    Route::delete('/{room}',[RoomController::class, 'destroy']);
 });
