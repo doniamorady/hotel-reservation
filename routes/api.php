@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BedController;
+use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\UserController;
@@ -39,4 +40,13 @@ Route::prefix('users')->group(function(){
     Route::get('/{user}', [UserController::class, 'show']);
     Route::put('/{user}', [UserController::class, 'update']);
     Route::delete('/{user}', [UserController::class, 'destroy']);
+});
+
+
+Route::prefix('bookings')->group(function(){
+    Route::get('/', [BookingController::class, 'index']);
+    Route::post('/', [BookingController::class, 'store']);
+    Route::get('/{booking}', [BookingController::class, 'show']);
+    Route::put('/{booking}', [BookingController::class, 'update']);
+    Route::delete('/{booking}', [BookingController::class, 'destroy']);
 });
