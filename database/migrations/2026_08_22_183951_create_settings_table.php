@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->decimal('breakfast_price',10,2);
+            $table->decimal('breakfast_unit_price',10,2);
             $table->unsignedInteger('max_nights')->default(10);
             $table->unsignedInteger('max_guests')->default(4);
             $table->timestamps();
