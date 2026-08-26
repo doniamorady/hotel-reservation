@@ -23,16 +23,6 @@ class UpdateBookingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'start_date' => ['sometimes', 'date', 'before_or_equal:end_date'],
-            'end_date' => ['sometimes', 'date', 'after_or_equal:start_date'],
-            'user_id' => ['sometimes', 'exists:users,id'],
-            'room_id' => ['sometimes', 'exists:rooms,id'],
-            'num_nights' => ['sometimes', 'integer', 'min:1'],
-            'num_guests' => ['sometimes', 'integer', 'min:1'],
-            'has_breakfast' => ['sometimes', 'boolean'],
-            'breakfast_price' => ['sometimes', 'numeric', 'min:0'],
-            'room_price' => ['sometimes', 'numeric', 'min:0'],
-            'total_price' => ['sometimes', 'numeric', 'min:0'],
             'status' => ['sometimes', 'string'],
         ];
     }

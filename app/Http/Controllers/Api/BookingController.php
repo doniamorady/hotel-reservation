@@ -7,13 +7,12 @@ use App\Http\Requests\Api\Booking\CreateBookingRequest;
 use App\Http\Requests\Api\Booking\UpdateBookingRequest;
 use App\Http\Resources\BookingResource;
 use App\Models\Booking;
-use Illuminate\Http\Request;
+use App\Models\Room;
+use App\Services\BookingService;
 
 class BookingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $bookings = Booking::with(['user', 'room'])->get();
@@ -21,39 +20,38 @@ class BookingController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resou
+     * 
+     * 
+     rce in storage.
      */
-    public function store(CreateBookingRequest $request)
+    public function store(CreateBookingRequest $request, BookingService $bookingService, Room $room)
     {
-        $inputs = $request->validated();
-        $booking = Booking::create($inputs);
+        $data = $request->validated();
+        $booking = $bookingService->createBooking($data, $room);
         return new BookingResource($booking);
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Booking $booking)
     {
         return new BookingResource($booking);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateBookingRequest $request, Booking $booking)
+
+    public function addBreakfast(Booking $booking, BookingService $service)
     {
-        $inputs = $request->validated();
-        $booking->update($inputs);
-        return new BookingResource($booking);
+        $updateBooking = $service->addBreakfast($booking);
+        return new BookingResource($updateBooking);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Booking $booking)
-    {
-        $booking->delete();
-        return response()->json(['message' => 'delete successfully'], 200);
+
+    public function updateStatus(
+        UpdateBookingRequest $request,
+        Booking $booking
+    ) {
+        $data = $request->validated();
+        $booking->update($data);
+        return new BookingResource($booking);
     }
 }

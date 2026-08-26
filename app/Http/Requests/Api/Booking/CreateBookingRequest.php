@@ -25,14 +25,8 @@ class CreateBookingRequest extends FormRequest
         return [
             'start_date' => ['required', 'date', 'before_or_equal:end_date'],
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
-            'user_id' => ['required', 'exists:users,id'],
-            'room_id' => ['required', 'exists:rooms,id'],
-            'num_nights' => ['required', 'integer', 'min:1'],
             'num_guests' => ['required', 'integer', 'min:1'],
             'has_breakfast' => ['required', 'boolean'],
-            'breakfast_price' => ['required', 'numeric', 'min:0'],
-            'room_price' => ['required', 'numeric', 'min:0'],
-            'total_price' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

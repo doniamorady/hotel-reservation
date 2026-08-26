@@ -26,11 +26,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('rooms')->insert([
-            ['name' => '001', 'status' => true, 'capacity' => 2],
-            ['name' => '002', 'status' => false, 'capacity' => 2],
-            ['name' => '003', 'status' => true, 'capacity' => 3],
-            ['name' => '004', 'status' => false, 'capacity' => 1],
-            ['name' => '005', 'status' => true, 'capacity' => 1],
+            ['name' => '001', 'price'=>200000, 'status' => true, 'capacity' => 2],
+            ['name' => '002', 'price'=>500000, 'status' => false, 'capacity' => 2],
+            ['name' => '003', 'price'=>250000, 'status' => true, 'capacity' => 3],
+            ['name' => '004', 'price'=>300000, 'status' => false, 'capacity' => 1],
+            ['name' => '005', 'price'=>1200000, 'status' => true, 'capacity' => 1],
         ]);
         
          // simple fixed bed-room assignments (bed_room pivot)

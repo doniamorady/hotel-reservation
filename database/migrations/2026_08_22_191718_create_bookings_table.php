@@ -18,10 +18,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate();
             $table->foreignId('room_id')->constrained('rooms')->cascadeOnUpdate();
             $table->unsignedTinyInteger('num_nights')->default(1); 
-            $table->string('status')->default('unconfirmed')->comment('unconfirmed, checked_in, checked_out, cancelled');
+            $table->string('status')->default('pending')->comment('pending, check_in, check_out, cacelled, expired');
             $table->unsignedTinyInteger('num_guests'); 
             $table->boolean('has_breakfast')->default(false);
-            $table->decimal('breakfast_price',10,2);
+            $table->decimal('breakfast_price',10,2)->default(0);
             $table->decimal('room_price',10,2);
             $table->decimal('total_price',10,2);
             $table->timestamps();
