@@ -10,7 +10,11 @@ use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::post('/login-register', [AuthController::class, 'loginRegister']);
+Route::prefix('auth')->group(function(){
+    
+    Route::post('/send-otp', [AuthController::class, 'sendOtp']);
+    Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
+});
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
