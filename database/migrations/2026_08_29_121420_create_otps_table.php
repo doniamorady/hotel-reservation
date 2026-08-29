@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('otps', function (Blueprint $table) {
             $table->id();
-            $table->char('otp_code',6);
+            $table->text('otp_code');
             $table->string('phone');
             $table->boolean('used')->default(0)->comment('0=> not used, 1=>used');
             $table->timestamp('expires_at');

@@ -73,3 +73,12 @@ Route::prefix('rooms')->group(function () {
     Route::get('/', [RoomController::class, 'index']);
     Route::get('/{room}', [RoomController::class, 'show']);
 });
+
+Route::get('/debug-session', function () {
+    return [
+        'auth' => auth()->check(),
+        'user' => auth()->user(),
+        'session' => session()->all(),
+        'cookies' => request()->cookies->all(),
+    ];
+});
