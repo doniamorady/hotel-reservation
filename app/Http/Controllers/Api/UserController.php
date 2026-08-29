@@ -7,6 +7,7 @@ use App\Http\Requests\Api\User\CreateUserRequest;
 use App\Http\Requests\Api\User\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -36,16 +37,9 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $inputs = $request->validated();
-        if (isset($inputs['password']))
-            $inputs['password'] = Hash::make($inputs['password']);
         $user->update($inputs);
         return new UserResource($user);
     }
-
-
-    public function destroy(User $user)
-    {
-        $user->delete();
-        return response()->json(['message'=>' delete successfully'], 200);
-    }
+    
+    
 }

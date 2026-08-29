@@ -26,9 +26,7 @@ class UpdateUserRequest extends FormRequest
             'first_name' => ['sometimes', 'string'],
             'last_name' => ['nullable', 'string'],
             'avatar' => ['nullable', 'string'],
-            'email' => ['nullable', 'email', 'unique:users,email', 'required_without:phone'],
-            'phone' => ['nullable', 'string', 'unique:users,phone', 'required_without:email'],
-            'password' =>['nullable','string', 'min:8']
+            'phone' => ['sometimes', 'string', 'unique:users,phone', 'required_without:email'],
         ];
     }
 }

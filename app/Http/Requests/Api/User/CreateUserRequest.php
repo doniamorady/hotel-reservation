@@ -27,9 +27,7 @@ class CreateUserRequest extends FormRequest
             'first_name' => ['nullable', 'string'],
             'last_name' => ['nullable', 'string'],
             'avatar' => ['nullable', 'string'],
-            'email' => ['nullable', 'email', 'unique:users,email', 'required_without:phone'],
-            'phone' => ['nullable', 'string', 'unique:users,phone', 'size:11', 'required_without:email'],
-            'password' =>['nullable','string', 'min:8']
+            'phone' => ['required', 'string', 'unique:users,phone', 'size:11', 'required_without:email'],
         ];
     }
 }
