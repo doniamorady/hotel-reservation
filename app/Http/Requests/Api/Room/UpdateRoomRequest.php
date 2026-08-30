@@ -26,7 +26,9 @@ class UpdateRoomRequest extends FormRequest
             'name' => ['sometimes', 'string'],
             'status' => ['sometimes', 'boolean'],
             'image' => ['sometimes', 'string'],
-            'capacity' => ['sometimes', 'integer', 'min:1'],
+            'price' => ['sometimes', 'numeric'],
+            'beds' => ['sometimes', 'array'],
+            'beds.*' => ['integer', 'exists:beds,id']
         ];
     }
 }

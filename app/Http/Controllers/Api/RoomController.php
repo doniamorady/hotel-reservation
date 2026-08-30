@@ -7,7 +7,7 @@ use App\Http\Requests\Api\Room\CreateRoomRequest;
 use App\Http\Requests\Api\Room\UpdateRoomRequest;
 use App\Http\Resources\RoomResource;
 use App\Models\Room;
-use Illuminate\Http\Request;
+use App\Models\Bed;
 
 class RoomController extends Controller
 {
@@ -21,24 +21,39 @@ class RoomController extends Controller
 
     public function store(CreateRoomRequest $request)
     {
-        $inputs = $request->validated();
-        $newRoom = Room::create($inputs);
-        return new RoomResource($newRoom->with('beds'));
+        $data = $request->validated();
+
+        $beds = $data['beds'];
+        unset($data['beds']);
+        $data['capacity'] = Bed::whereIn('id', $beds)->get()->sum('capacity');
+
+        $newRoom = Room::create($data);
+        $newRoom->beds()->sync($beds);
+
+        return new RoomResource($newRoom->load('beds'));
     }
 
 
     public function show(Room $room)
     {
-        return new RoomResource($room->with('beds'));
+        return new RoomResource($room->load('beds'));
     }
 
 
 
     public function update(UpdateRoomRequest $request, Room $room)
     {
-        $inputs = $request->validated();
-        $room->update($inputs);
-        return new RoomResource($room->with('beds'));
+        $data = $request->validated();
+
+        if (isset($data['beds'])) {
+            $beds = $data['beds'];
+            unset($data['beds']);
+            $room->beds()->sync($beds);
+            $data['capacity'] = Bed::whereIn('id', $beds)->get()->sum('capacity');
+        }
+
+        $room->update($data);
+        return new RoomResource($room->load('beds'));
     }
 
 

@@ -21,6 +21,7 @@ class RoomResource extends JsonResource
             'status' => $this->status,
             'image' => $this->image,
             'capacity' => $this->capacity,
+            'price' => (float)$this->price,
             'beds' => BedResource::collection($this->whenLoaded('beds'))
         ];
     }

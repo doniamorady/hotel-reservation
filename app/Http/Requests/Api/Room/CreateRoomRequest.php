@@ -26,7 +26,9 @@ class CreateRoomRequest extends FormRequest
             'name' => ['required'],
             'image' => ['nullable', 'string'],
             'status' => ['sometimes', 'boolean'],
-            'capacity' => ['required', 'integer', 'min:1']
+            'price' => ['required', 'numeric'],
+            'beds' => ['required', 'array'],
+            'beds.*' => ['integer', 'exists:beds,id']
         ];
     }
 }
