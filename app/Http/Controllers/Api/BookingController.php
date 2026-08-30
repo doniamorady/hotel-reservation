@@ -15,7 +15,12 @@ class BookingController extends Controller
 
     public function index()
     {
-        $bookings = Booking::with(['user', 'room'])->get();
+        $user = auth()->user();
+        if ($user->hasRole('admin'))
+            $bookings = Booking::with(['user', 'room'])->get();
+        else {
+            $bookings = $user->bookings()->with(['user', 'room'])->get();
+        }
         return BookingResource::collection($bookings);
     }
 
@@ -35,6 +40,7 @@ class BookingController extends Controller
 
     public function show(Booking $booking)
     {
+        $this->authorize('view', $booking);
         return new BookingResource($booking);
     }
 

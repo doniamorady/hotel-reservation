@@ -28,6 +28,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     Route::prefix('bookings')->group(function () {
+        Route::get('/', [BookingController::class, 'index']);
         Route::post('/room/{room}', [BookingController::class, 'store']);
         Route::get('/{booking}', [BookingController::class, 'show']);
         Route::put('/{booking}/add-breakfast', [BookingController::class, 'addBreakfast']);
@@ -62,7 +63,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         });
 
         Route::prefix('bookings')->group(function () {
-            Route::get('/', [BookingController::class, 'index']);
             Route::put('/{booking}/status', [BookingController::class, 'updateStatus']);
         });
     });
