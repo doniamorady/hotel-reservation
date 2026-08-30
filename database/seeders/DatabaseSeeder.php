@@ -8,16 +8,24 @@ use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
-
+    
     /**
      * Seed the application's database.
-     */
+    */
     public function run(): void
     {
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'customer']);
+        
+        $user=User::create(['phone'=> '09123456789',
+        'first_name' => 'admin', 'last_name' => 'moradi']);
+        $user->assignRole('admin');
+        
         User::factory(10)->create();
 
         DB::table('beds')->insert([
@@ -86,5 +94,6 @@ class DatabaseSeeder extends Seeder
             'max_nights' => 10,
             'max_guests' => 5,
         ]);
+
     }
 }

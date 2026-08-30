@@ -20,6 +20,7 @@ Route::prefix('auth')->group(function(){
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/me', [AuthController::class, 'me']);
 
     Route::prefix('profile')->group(function () {
         Route::get('/', [ProfileController::class, 'showProfile']);
@@ -32,7 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/{booking}/add-breakfast', [BookingController::class, 'addBreakfast']);
     });
 
-    Route::prefix('admin')->group(function () {
+    Route::middleware(['role:admin'])->prefix('admin')->group(function () {
 
         Route::prefix('beds')->group(function () {
             Route::get('/', [BedController::class, 'index']);
@@ -72,13 +73,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::prefix('rooms')->group(function () {
     Route::get('/', [RoomController::class, 'index']);
     Route::get('/{room}', [RoomController::class, 'show']);
-});
-
-Route::get('/debug-session', function () {
-    return [
-        'auth' => auth()->check(),
-        'user' => auth()->user(),
-        'session' => session()->all(),
-        'cookies' => request()->cookies->all(),
-    ];
 });

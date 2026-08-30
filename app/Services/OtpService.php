@@ -54,8 +54,10 @@ class OtpService
             'used' => true
         ]);
 
-        return User::firstOrCreate([
+        $user= User::firstOrCreate([
             'phone' => $data['phone']
-        ]);
+        ])->assignRole('customer');
+        
+        return $user;
     }
 }
