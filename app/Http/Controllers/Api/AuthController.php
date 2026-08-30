@@ -29,10 +29,8 @@ class AuthController extends Controller
     }
 
 
-    public function verifyOtp(
-        VerifyOtpRequest $request,
-        OtpService $otpService
-    ) {
+    public function verifyOtp(VerifyOtpRequest $request, OtpService $otpService)
+    {
         $data = $request->validated();
 
         $data['phone'] = preg_replace(
@@ -44,28 +42,29 @@ class AuthController extends Controller
 
         $user = $otpService->verifyOtp($data);
 
-
         if (!$user) {
             return response()->json([
                 'message' => 'Invalid OTP'
             ], 422);
         }
-
-
-        Auth::login($user);
-        $request->session()->regenerate();
+        $user->tokens()->delete();
+        // Create personal access token for API (Bearer)
+        $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
             'message' => 'login successful',
-            'user' => new UserResource($user)
+            'user' => new UserResource($user),
+            'token' => $token,
+            'token_type' => 'Bearer'
         ]);
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return response()->json(['message' => 'logged out successfully']);
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => 'Logged out successfully'
+        ]);
     }
 }
