@@ -19,7 +19,7 @@ Route::prefix('auth')->group(function(){
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
 
     Route::prefix('profile')->group(function () {

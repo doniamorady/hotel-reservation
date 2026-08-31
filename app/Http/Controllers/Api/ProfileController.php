@@ -20,6 +20,6 @@ class ProfileController extends Controller
         $user = $request->user();
         $data = $request->validated();
         $user->update($data);
-        return new UserResource($user);
+        return response()->json(['message' => 'profile successfully updated', 'profile' => new UserResource($user)]);
     }
 }
