@@ -57,9 +57,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::prefix('users')->group(function () {
             Route::get('/', [UserController::class, 'index']);
-            Route::post('/', [UserController::class, 'store']);
+            Route::post('/', [UserController::class, 'createAdmin']);
             Route::get('/{user}', [UserController::class, 'show']);
             Route::put('/{user}', [UserController::class, 'update']);
+            Route::put('/{user}/change-role', [UserController::class, 'changeRole']);
         });
 
         Route::prefix('bookings')->group(function () {
