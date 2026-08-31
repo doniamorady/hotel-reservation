@@ -24,7 +24,7 @@ class UpdateSettingRequest extends FormRequest
     {
         
         return [
-            'breakfast_price' => ['nullable'],
+            'breakfast_unit_price' => ['nullable'],
             'max_nights'=> ['nullable', 'integer', 'min:1'],
             'max_guests'=> ['nullable', 'integer', 'min:1']
         ];

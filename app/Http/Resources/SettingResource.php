@@ -15,7 +15,7 @@ class SettingResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'breakfast_unit_price' => $this->breakfast_unit_price,
+            'breakfast_unit_price' =>(float) $this->breakfast_unit_price,
             'max_nights' => $this->max_nights,
             'max_guests' => $this->max_guests
         ];
