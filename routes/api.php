@@ -64,7 +64,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         });
 
         Route::prefix('bookings')->group(function () {
-            Route::put('/{booking}/status', [BookingController::class, 'updateStatus']);
+            Route::put('/{booking}/change-status', [BookingController::class, 'updateStatus']);
         });
     });
 

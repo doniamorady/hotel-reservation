@@ -22,12 +22,13 @@ class BookingService
 
         //2.check the room capacity lower than num guests
         if (((int)$data['num_guests']) > $room->capacity)
-            return throw new Exception('num guests must be lower than ' . $room->capacity . ' guest');
-
+            throw new Exception(
+                'This room has a maximum capacity of ' . $room->capacity . ' guests.'
+            );
         //without auth
-        $data['user_id'] = 1;
+        $data['user_id'] = auth()->user()->id;
         $data['room_id'] = $room->id;
-
+        
 
         $num_nights = strtotime($data['end_date']) - strtotime($data['start_date']);
         //86400 : 24*60*60

@@ -21,11 +21,11 @@ return new class extends Migration
             $table->string('status')->default('pending')->comment('pending, check_in, check_out, cacelled, expired');
             $table->unsignedTinyInteger('num_guests'); 
             $table->boolean('has_breakfast')->default(false);
-            $table->decimal('breakfast_unit_price',10,2);
-            $table->decimal('total_breakfast_price',10,2)->default(0);
-            $table->decimal('room_unit_price',10,2);
-            $table->decimal('total_room_price',10,2);
-            $table->decimal('total_price',10,2);
+            $table->unsignedBigInteger('breakfast_unit_price');
+            $table->unsignedBigInteger('total_breakfast_price')->default(0);
+            $table->unsignedBigInteger('room_unit_price');
+            $table->unsignedBigInteger('total_room_price');
+            $table->unsignedBigInteger('total_price');
             $table->timestamps();
             $table->softDeletes();
         });

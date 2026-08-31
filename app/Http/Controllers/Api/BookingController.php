@@ -48,7 +48,7 @@ class BookingController extends Controller
     public function addBreakfast(Booking $booking, BookingService $service)
     {
         $updateBooking = $service->addBreakfast($booking);
-        return new BookingResource($updateBooking);
+        return response()->json(['message' => 'breakfast successfully added', 'booking' =>  new BookingResource($updateBooking)]);
     }
 
 
@@ -58,6 +58,6 @@ class BookingController extends Controller
     ) {
         $data = $request->validated();
         $booking->update($data);
-        return new BookingResource($booking);
+        return response()->json(['message' => 'status successfully updated', 'booking' =>  new BookingResource($booking)]);
     }
 }

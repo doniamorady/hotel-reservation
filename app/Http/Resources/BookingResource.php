@@ -24,11 +24,11 @@ class BookingResource extends JsonResource
             'user' => new UserResource($this->user),
             'room' => new RoomResource($this->room),
             'num_nights' => $this->num_nights,
-            'num_guests' =>(int) $this->num_guests,
+            'num_guests' => (int) $this->num_guests,
             'has_breakfast' => $this->has_breakfast ? true : false,
             'breakfast_unit_price' => $this->breakfast_unit_price,
             'total_breakfast_price' => $this->total_breakfast_price,
-            'room_unit_price' => (int)$this->room_unit_price,
+            'room_unit_price' => $this->room_unit_price,
             'total_room_price' => $this->total_room_price,
             'total_price' => $this->total_price
         ];
