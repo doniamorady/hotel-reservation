@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Bed extends Model
 {
     use SoftDeletes;
-    
+
     protected $guarded = ['id'];
 
     public function rooms()
     {
-        return $this->belongsToMany(Room::class);
+        $this->belongsToMany(Room::class);
     }
 }

@@ -5,7 +5,7 @@
              style="max-width: 350px; border: none; border-radius: 0.75rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
             
             <div class="toast-body p-0">
-                <div class="d-flex align-items-center bg-light-primary rounded p-5">
+                <div class="d-flex align-items-center bg-light-warning rounded p-5">
                     
                     <span class="svg-icon svg-icon-2hx svg-icon-warning me-4">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
