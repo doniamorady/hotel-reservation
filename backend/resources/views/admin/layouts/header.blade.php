@@ -85,19 +85,19 @@
                         <!--end::Menu separator-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="{{ route('admin.user.show-profile') }}" class="menu-link px-5">پروفایل من</a>
+                            {{-- <a href="{{ route('admin.user.show-profile') }}" class="menu-link px-5">پروفایل من</a> --}}
                         </div>
                         <!--end::Menu item-->
 
 
                     
                         <!--begin::Menu item-->
-                        <form action="{{ route('admin.logout') }}" method="post" style="border:none">
+                        {{-- <form action="{{ route('admin.logout') }}" method="post" style="border:none">
                             @csrf
                             <div class="menu-item px-5">
                                 <button type="submit"  class="menu-link px-5 btn btn-primary text-white w-100" style="border:none;">خروج</button>
                             </div>
-                        </form>
+                        </form> --}}
                         <!--end::Menu item-->
                         <!--begin::Menu separator-->
                         <div class="separator my-2"></div>

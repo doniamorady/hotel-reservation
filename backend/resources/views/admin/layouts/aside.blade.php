@@ -69,7 +69,7 @@
                            <span class="menu-section text-muted text-uppercase fs-8 ls-1">مدیریت هتل</span>
                        </div>
                    </div>
-                   <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                   {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                        <span class="menu-link">
                            <span class="menu-icon">
                                <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
@@ -116,7 +116,7 @@
 
 
                        </div>
-                   </div>
+                   </div> --}}
 
                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                        <span class="menu-link">
@@ -170,7 +170,7 @@
 
                    </div>
 
-                   <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                   {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                        <span class="menu-link">
                            <span class="menu-icon">
                                <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
@@ -216,11 +216,11 @@
                            </div>
 
                        </div>
-                   </div>
+                   </div> --}}
 
 
 
-
+{{-- 
 
                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                        <span class="menu-link">
@@ -257,10 +257,10 @@
                            </div>
 
                        </div>
-                   </div>
+                   </div> --}}
 
 
-                   @role('super_admin')
+                   {{-- @role('super_admin')
                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                            <span class="menu-link">
                                <span class="menu-icon">
@@ -310,7 +310,7 @@
                            </div>
 
                        </div>
-                   @endrole
+                   @endrole --}}
 
                    {{-- <div class="menu-item">
                        <div class="menu-content pt-8 pb-2">
