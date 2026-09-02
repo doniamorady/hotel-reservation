@@ -1,0 +1,108 @@
+  @font-face {
+    font-family: "IRANSansWeb";
+    src: url("../fonts/IRANSansWeb.eot"); /* IE */
+    src: url("../fonts/IRANSansWeb.eot?#iefix") format("embedded-opentype"), /* IE */
+    url("../fonts/IRANSansWeb.woff") format("woff"), /* Modern Browsers */
+    url("../fonts/IRANSansWeb.ttf") format("truetype"); /* Safari, Android, iOS */
+    font-weight: normal;
+}
+  * {
+        font-family: "IRANSansWeb";
+    }
+
+    body {
+        user-select: none;
+        overflow-y: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #0d1b2a;
+        height: 100vh;
+    }
+
+    .screen-1 {
+        background: #0d1b2a;
+        padding: 2em;
+        display: flex;
+        flex-direction: column;
+        border-radius: 30px;
+        box-shadow: 0 0 2em rgba(0, 0, 0, 0.5);
+        gap: 2em;
+        width: 280px;
+    }
+
+    .screen-1 .logo {
+        margin: 0 auto;
+    }
+
+    .screen-1 .email,
+    .screen-1 .password {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        border-radius: 15px;
+        color: #fff;
+    }
+
+    .screen-1 .email input,
+    .screen-1 .password input {
+        outline: none;
+        border: none;
+        padding: 0 20px;
+        background: transparent;
+        color: #fff;
+        text-align: right;
+    }
+
+    .screen-1 .email input::placeholder,
+    .screen-1 .password input::placeholder {
+        color: #ddd;
+        /* placeholder روشن */
+    }
+
+    .screen-1 .email ion-icon,
+    .screen-1 .password ion-icon {
+        color: #fff;
+        margin-left: 0.5em;
+    }
+
+    .screen-1 .login {
+        padding: 12px;
+        background: #ffda00;
+        color: #0d1b2a;
+        border: none;
+        border-radius: 30px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 10px;
+        width: 100%;
+        transition: 0.3s;
+    }
+
+    .screen-1 .login:hover {
+        background: #e6c200;
+    }
+
+    .screen-1 .footer {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8em;
+        color: #ccc;
+        margin-top: 1em;
+    }
+
+    .screen-1 .footer span {
+        cursor: pointer;
+    }
+
+    label {
+        color: #ccc;
+        font-size: 13px;
+    }
+
+    input{
+        color: #ccc;
+    }

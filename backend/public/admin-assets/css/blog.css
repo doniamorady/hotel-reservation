@@ -1,0 +1,49 @@
+    /* سایدبار دسته‌بندی */
+        .sidebar-box {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #eef0f3;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-box:hover {
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        /* محتوای بلاگ */
+        .content-box {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #eef0f3;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+        }
+
+        /* آیتم‌های دسته‌بندی */
+        .sidebar-box a {
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .sidebar-box a:hover {
+            background-color: #f5f8ff;
+            color: #0d6efd;
+        }
+
+        /* آیکن کنار دسته‌بندی */
+        .sidebar-box i {
+            font-size: 8px;
+            margin-left: 6px;
+        }
+
+        /* کارت بلاگ */
+        .card-hover-shadow {
+            border-radius: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .card-hover-shadow:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
