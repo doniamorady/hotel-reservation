@@ -23,12 +23,15 @@ class UpdateRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string'],
+            'name' => ['sometimes'],
+            'description' => ['sometimes'],
             'status' => ['sometimes', 'boolean'],
-            'image' => ['sometimes', 'string'],
+            'cover_image' => ['sometimes', 'image', 'mimes:png,jpg,jpeg,webp'],
             'price' => ['sometimes', 'numeric'],
             'beds' => ['sometimes', 'array'],
-            'beds.*' => ['integer', 'exists:beds,id']
+            'beds.*' => ['integer', 'exists:beds,id'],
+            'gallery_images' =>['sometimes', 'array'],
+            'gallery_images.*' =>['image', 'mimes:png,jpg,jpeg,webp']
         ];
     }
 }

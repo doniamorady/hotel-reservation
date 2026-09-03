@@ -24,11 +24,14 @@ class CreateRoomRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'image' => ['nullable', 'string'],
+            'description' => ['nullable'],
+            'cover_image' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp'],
             'status' => ['sometimes', 'boolean'],
             'price' => ['required', 'numeric'],
             'beds' => ['required', 'array'],
-            'beds.*' => ['integer', 'exists:beds,id']
+            'beds.*' => ['integer', 'exists:beds,id'],
+            'gallery_images' => ['nullable', 'array'],
+            'gallery_images.*'=>['image', 'mimes:png,jpg,jpeg,webp']
         ];
     }
 }

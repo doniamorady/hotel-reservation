@@ -3,20 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\RoomRequest;
+use App\Http\Requests\Api\Room\CreateRoomRequest;
+use App\Http\Requests\Api\Room\UpdateRoomRequest;
 use App\Models\Bed;
 use App\Models\Room;
-use App\Http\Services\imageService\ImageService;
-use App\Models\Amenity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RoomController extends Controller
 {
 
     public function index()
     {
-        $rooms = Room::orderBy('created_at', 'desc')->get();
-        return view('admin.room.rooms', compact(['rooms']));
+        return view('admin.room.rooms');
     }
 
     //----------------------------------------------------------------------------------
@@ -24,56 +23,39 @@ class RoomController extends Controller
     public function create()
     {
         $beds = Bed::all();
-        $amenities = Amenity::orderBy('created_at', 'desc')->get();
-        return view('admin.room.add-room', compact('beds', 'amenities'));
+        return view('admin.room.add-room', compact('beds'));
     }
 
     //----------------------------------------------------------------------------------
 
-    public function store(RoomRequest $request, ImageService $imageService)
+    public function store(CreateRoomRequest $request)
     {
-        $beds = array_map('intval', $request->beds);
-        $arrBeds = [];
-
-        foreach ($beds as $key => $value) {
-            $bed = Bed::find($key)->name;
-            if ($value > 0) {
-                $arrBeds[$bed] = $value;
-            }
-        }
 
         $inputs = $request->validated();
-        $path = '';
-
+        $path = null;
 
         //image upload 
         if ($request->hasFile('cover_image')) {
-            $path = $imageService->uploadImage($request->file('cover_image'), 'images/rooms');
+            $path = $request->file('cover_image')->store('rooms/covers', 'public');
         }
+        $capacity = Bed::whereIn('id', $inputs['beds'])->sum('capacity');
 
         $newRoom = Room::create([
             "name" => $inputs['name'],
             "description" => $inputs['description'],
             "cover_image" => $path,
-            "price_per_night" => $inputs['price_per_night'],
-            "capacity" => $inputs['capacity'],
-            "beds" => $arrBeds
+            "price" => $inputs['price'],
+            "capacity" => (int) $capacity,
         ]);
 
-        if (!empty($inputs['amenities'])) {
-            foreach ($inputs['amenities'] as $amenity) {
-                $newRoom->amenities()->attach($amenity);
-            }
-        }
+        $newRoom->beds()->sync($inputs['beds']);
 
 
         if ($request->hasFile('gallery_images')) {
             foreach ($request->file('gallery_images') as $gallery_image) {
-                $galleryPath = $imageService->uploadImage($gallery_image, 'images/rooms/gallery');
+                $galleryPath = $gallery_image->store('rooms/gallery', 'public');
 
-                $newRoom->images()->create([
-                    "path" => $galleryPath
-                ]);
+                $newRoom->gallery()->create(['path' => $galleryPath]);
             }
         }
 
@@ -83,70 +65,75 @@ class RoomController extends Controller
 
     public function edit(Room $room)
     {
-        $gallery = $room->images;
         $beds = Bed::orderBy('created_at', 'desc')->get();
-        $amenities = Amenity::orderBy('created_at', 'desc')->get();
-        return view('admin.room.edit', compact(['room', 'gallery', 'beds', 'amenities']));
+        return view('admin.room.edit', compact(['room', 'beds']));
     }
 
 
     //----------------------------------------------------------------------------------
 
-    public function update(RoomRequest $request, Room $room, ImageService $imageService)
+    public function update(UpdateRoomRequest $request, Room $room)
     {
         $inputs = $request->validated();
-        $beds = array_map('intval', $request->beds);
-        $arrBeds = [];
+        $capacity = (int) Bed::whereIn('id', $inputs['beds'])->sum('capacity');
 
-        foreach ($beds as $key => $value) {
-            $bed = Bed::find($key)->name;
-            if ($value >= 1) {
-                $arrBeds[$bed] = $value;
-            }
-        }
-
+        // cover image
         if ($request->hasFile('cover_image')) {
-
-            if (!empty($room->cover_image)) {
-                $imageService->removeImage($room->cover_image);
+            if (!empty($room->cover_image) && Storage::disk('public')->exists($room->cover_image)) {
+                Storage::disk('public')->delete($room->cover_image);
             }
 
-            $path = $imageService->uploadImage($inputs['cover_image'], "images/rooms");
+            $path = $request->file('cover_image')->store('rooms/covers', 'public');
             $room->cover_image = $path;
         }
 
-        //remove image from room gallery
-        if (isset($request->delete_gallery_images)) {
-            foreach ($request->delete_gallery_images as $delete) {
-                $image = $room->images()->findOrFail($delete);
-                if ($image) {
-                    $imageService->removeImage($image->path);
-                    $image->delete();
+        // handle retention/deletion of existing gallery images
+        $keepIds = [];
+
+        if ($request->filled('old_gallery_images')) {
+            $keepIds = array_filter(explode(',', $request->input('old_gallery_images')));
+        }
+
+        $existingIds = $room->gallery->pluck('id')->toArray();
+        $toDelete = array_diff($existingIds, $keepIds);
+
+        if (!empty($toDelete)) {
+            $imagesToDelete = $room->gallery()->whereIn('id', $toDelete)->get();
+            foreach ($imagesToDelete as $image) {
+                if (Storage::disk('public')->exists($image->path)) {
+                    Storage::disk('public')->delete($image->path);
                 }
+                $image->delete();
             }
         }
 
-        //add new image to room gallery
+        // add newly uploaded gallery images
         if ($request->hasFile('gallery_images')) {
             foreach ($request->file('gallery_images') as $gallery) {
-                $path = $imageService->uploadImage($gallery, "images/rooms/gallery");
-                $room->images()->create([
-                    'path' => $path
-                ]);
+                $galleryPath = $gallery->store('rooms/gallery', 'public');
+                $room->gallery()->create(['path' => $galleryPath]);
             }
         }
 
+        // update main room fields
         $room->update([
             "name" => $inputs['name'],
             "description" => $inputs['description'],
-            "price_per_night" => $inputs['price_per_night'],
-            "capacity" => $inputs['capacity'],
-            "beds" => $arrBeds,
+            "price" => $inputs['price'],
+            "capacity" => $capacity,
         ]);
-        $room->save();
-        $room->amenities()->sync($inputs['amenities']);
+
+        if (!empty($inputs['beds'])) {
+            $room->beds()->sync($inputs['beds']);
+        }
 
         return redirect()->route('admin.room.index')->with('toast-success', 'اتاق با موفقیت ویرایش شد');
+    }
+
+    public function changeStatus(Room $room)
+    {
+        $room->update(['status' => !$room->status]);
+        return redirect()->back();
     }
 
 
