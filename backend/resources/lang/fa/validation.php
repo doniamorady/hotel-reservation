@@ -203,7 +203,10 @@ return [
         'roles'                      => 'نقش',
         'type'                      => 'نام تخت',
         'cover_image'               => 'عکس شاخص',
-        'beds'                      =>'تخت'
+        'beds'                      =>'تخت',
+        'max_nights'                =>'حداکثر شب های اقامت',
+        'max_guests'                =>'حداکثر مهمانان',
+        'breakfast_unit_price'      =>'قیمت هر وعده صبحانه',
 
     ],
 ];
