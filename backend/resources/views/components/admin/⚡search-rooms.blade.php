@@ -7,6 +7,7 @@ use App\Models\Room;
 new class extends Component {
     use WithPagination;
     public $search = '';
+    protected $paginationTheme = 'bootstrap';
 
     public function updatingSearch()
     {
@@ -75,7 +76,7 @@ new class extends Component {
                             <div class="d-flex align-items-center">
                                 <a href="{{ route('admin.room.edit', $room) }}" class="symbol symbol-50px">
                                     <span class="symbol-label"
-                                        style="background-image:url({{ asset(!empty(Storage::url($room->cover_image)) ? Storage::url($room->cover_image) : 'images/no_image.png') }}); width:45px; height:45px"></span>
+                                        style="background-image:url({{ $room->cover_image ? Storage::url($room->cover_image) : asset('images/no_image.png') }}); width:45px; height:45px"></span>
                                 </a>
                                 <div class="ms-5">
                                     <a href="{{ route('admin.room.edit', $room) }}"

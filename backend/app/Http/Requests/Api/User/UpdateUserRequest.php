@@ -4,6 +4,9 @@ namespace App\Http\Requests\Api\User;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
+use Override;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -22,11 +25,13 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-          return [
+        $user = $this->route('user');
+        return [
             'first_name' => ['sometimes', 'string'],
-            'last_name' => ['nullable', 'string'],
-            'avatar' => ['nullable', 'string'],
-            'phone' => ['sometimes', 'string', 'unique:users,phone', 'required_without:email'],
+            'last_name' => ['sometimes', 'string'],
+            'avatar' => ['sometimes', 'image', 'mimes:png,jpg,jpeg,webp'],
+            'phone' => ['sometimes', Rule::unique('users', 'phone')->ignore($user->id)],
+            'password' => ['nullable','string', Password::min(8)->letters()->numbers()->symbols()]
         ];
     }
 }

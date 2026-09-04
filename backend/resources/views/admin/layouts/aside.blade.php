@@ -281,7 +281,6 @@
                    </div> --}}
 
 
-                   {{-- @role('super_admin')
                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                            <span class="menu-link">
                                <span class="menu-icon">
@@ -331,7 +330,6 @@
                            </div>
 
                        </div>
-                   @endrole --}}
 
                    {{-- <div class="menu-item">
                        <div class="menu-content pt-8 pb-2">
