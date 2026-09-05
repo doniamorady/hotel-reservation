@@ -191,7 +191,7 @@
 
                    </div>
 
-                   {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                        <span class="menu-link">
                            <span class="menu-icon">
                                <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
@@ -210,34 +210,34 @@
                                </span>
                                <!--end::Svg Icon-->
                            </span>
-                           <span class="menu-title">امکانات رفاهی</span>
+                           <span class="menu-title">رزروها</span>
                            <span class="menu-arrow"></span>
                        </span>
                        <div class="menu-sub menu-sub-accordion menu-active-bg">
                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                <div class="menu-item">
-                                   <a class="menu-link" href="{{ route('admin.amenity.index') }}">
+                                   <a class="menu-link" href="{{ route('admin.bookings.index') }}">
                                        <span class="menu-bullet">
                                            <span class="bullet bullet-dot"></span>
                                        </span>
-                                       <span class="menu-title">همه امکانات</span>
+                                       <span class="menu-title">همه رزرو ها</span>
                                    </a>
                                </div>
                            </div>
 
                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                <div class="menu-item">
-                                   <a class="menu-link" href="{{ route('admin.amenity.create') }}">
+                                   <a class="menu-link" href="{{ route('admin.bookings.create') }}">
                                        <span class="menu-bullet">
                                            <span class="bullet bullet-dot"></span>
                                        </span>
-                                       <span class="menu-title">ایجاد امکان رفاهی</span>
+                                       <span class="menu-title">ایجاد رزرو</span>
                                    </a>
                                </div>
                            </div>
 
                        </div>
-                   </div> --}}
+                   </div> 
 
 
 
@@ -407,13 +407,12 @@
                            </div>
 
                        </div>
-                   </div> --}}
+                   </div>
 
 
-
-                   {{-- <div class="menu-item">
-                           <div class="menu-content pt-8 pb-2">
-                               <span class="menu-section text-muted text-uppercase fs-8 ls-1">تنظیمات</span>
+                   <div class="menu-item">
+                       <div class="menu-content pt-8 pb-2">
+                           <span class="menu-section text-muted text-uppercase fs-8 ls-1">تنظیمات</span>
                            </div>
                        </div>
 

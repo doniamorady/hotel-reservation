@@ -26,11 +26,13 @@ class BookingService
                 'This room has a maximum capacity of ' . $room->capacity . ' guests.'
             );
         //without auth
-        $data['user_id'] = auth()->user()->id;
+        // $data['user_id'] = auth()->user()->id;
+        $data['user_id'] =1;
         $data['room_id'] = $room->id;
-        
+
 
         $num_nights = strtotime($data['end_date']) - strtotime($data['start_date']);
+        dd($num_nights);
         //86400 : 24*60*60
         $data['num_nights'] = (int)((round($num_nights / 86400)));
 
@@ -61,6 +63,28 @@ class BookingService
             'total_price' => $total_price
         ]);
 
+        return $booking;
+    }
+
+    public function changeStatus(object $booking)
+    {
+        switch ($booking->status) {
+            case 'pending':
+                $status = 'check_in';
+                break;
+            case 'check_in':
+                $status = 'check_out';
+                break;
+            case 'check_out':
+                $status = 'cancelled';
+                break;
+            case 'cancelled':
+                $status = 'pending';
+                break;
+            default:
+                throw new Exception('Invalid booking status');
+        }
+        $booking->update(['status' => $status]);
         return $booking;
     }
 }

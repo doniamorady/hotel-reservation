@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BedController;
+use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
@@ -39,6 +40,18 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{user}', [UserController::class, 'edit'])->name('admin.user.edit');
         Route::put('/{user}', [UserController::class, 'update'])->name('admin.user.update');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('admin.user.delete');
+    });
+    
+        Route::prefix('bookings')->name('admin.bookings.')->group(function () {
+        Route::get('/', [BookingController::class, 'index'])->name('index');
+        Route::get('/create', [BookingController::class, 'create'])->name('create');
+        Route::post('/room/{room}', [BookingController::class, 'store'])->name('store');
+        Route::get('/{booking}', [BookingController::class, 'show'])->name('show');
+        Route::get('/{booking}/edit', [BookingController::class, 'edit'])->name('edit');
+        Route::put('/{booking}', [BookingController::class, 'update'])->name('update');
+        Route::put('/{booking}/change-status', [BookingController::class, 'changeStatus'])->name('change-status');
+        Route::put('/{booking}/update-status', [BookingController::class, 'updateStatus'])->name('update-status');
+        Route::put('/{booking}/add-breakfast', [BookingController::class, 'addBreakfast'])->name('add-breakfast');
     });
 
 
