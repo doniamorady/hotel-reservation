@@ -8,6 +8,7 @@ use App\Http\Requests\Api\User\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -24,33 +25,38 @@ class UserController extends Controller
     public function adminStore(CreateUserRequest $request)
     {
         $data = $request->validated();
-        if($request->hasFile('avatar')){
+        if ($request->hasFile('avatar')) {
             $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
         }
-          //all mobile numbers are on format 9** *** ***
+        //all mobile numbers are on format 9** *** ***
         $data['phone'] = preg_replace("/^(\+98|98)/", '0', $data['phone']);
-        
+
         $data['password'] = Hash::make($data['password']);
         unset($data['password']);
-        
-        User::create($data);
+
+        $user = User::create($data);
+        $user->assignRole('admin');
         return redirect()->route('admin.user.index')->with('toast-success', 'کاربر با موفقیت اضافه شد');
     }
 
     public function edit(User $user)
     {
-        return view('admin.user.edit', compact('user'));
+        $roles = Role::all();
+        return view('admin.user.edit', compact(['user', 'roles']));
     }
 
     public function update(UpdateUserRequest $request, User $user)
     {
         $data = $request->validated();
-        if($request->hasFile('avatar')){
-            if($user->avatar && Storage::disk('public')->exists($user->avatar))
+        
+        $user->syncRoles($data['roles']);
+        unset($data['roles']);
+        
+        if ($request->hasFile('avatar')) {
+            if ($user->avatar && Storage::disk('public')->exists($user->avatar))
                 Storage::disk('public')->delete($user->avatar);
-            
+
             $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
-            
         }
         if (!empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);

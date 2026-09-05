@@ -2,15 +2,22 @@
 
 use Livewire\Component;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 use Livewire\WithPagination;
 
 new class extends Component {
     use WithPagination;
 
     public $search = '';
+    public $filter = 'all';
     protected $paginationTheme = 'bootstrap';
 
     public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFilter()
     {
         $this->resetPage();
     }
@@ -20,12 +27,18 @@ new class extends Component {
         return [
             'users' => User::query()
                 ->when($this->search, function ($query) {
-                    $query
-                        ->where('first_name', 'like', '%' . $this->search . '%')
-                        ->orWhere('last_name', 'like', '%' . $this->search . '%')
-                        ->orWhere('phone', 'like', '%' . $this->search . '%');
+                    $query->where(function ($q) {
+                        $q->where('first_name', 'like', "%{$this->search}%")
+                            ->orWhere('last_name', 'like', "%{$this->search}%")
+                            ->orWhere('phone', 'like', "%{$this->search}%");
+                    });
                 })
-                ->orderBy('created_at', 'desc')->paginate(10),
+                ->when($this->filter !== 'all', function ($query) {
+                    $query->role($this->filter);
+                })
+                ->latest()
+                ->paginate(10),
+            'roles' => Role::all(),
         ];
     }
 };
@@ -44,27 +57,27 @@ new class extends Component {
                             fill="currentColor" />
                     </svg>
                 </span>
-                <input type="text" class="form-control form-control-solid w-250px ps-14" wire:model.live.debounce.300ms="search"
-                    placeholder="جستجو کاربران" name="search" id="search" />
+                <input type="text" class="form-control form-control-solid w-250px ps-14"
+                    wire:model.live.debounce.300ms="search" placeholder="جستجو کاربران" name="search" id="search" />
             </div>
         </div>
 
 
         <div class="card-toolbar">
 
-            {{-- <di style="margin-left: 1rem">
+            <di style="margin-left: 1rem">
                 <div class="w-100 mw-150px">
                     <select class="form-select form-select-solid" wire:model.live="filter" data-placeholder="وضعیت"
                         name="filter">
-                        <option value="0">همه</option>
+                        <option value="all">همه</option>
                         @foreach ($roles as $role)
-                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            <option value="{{ $role->name }}">{{ $role->name }}</option>
                         @endforeach
 
                     </select>
                 </div>
 
-            </di> --}}
+            </di>
 
             <a href="{{ route('admin.user.create') }}" class="btn btn-primary"
                 style="padding: 8px 14px;font-size: 12px;">افزودن عضو</a>
@@ -83,7 +96,7 @@ new class extends Component {
                         </div>
                     </th>
                     <th class="min-w-250px">نام</th>
-                    {{-- <th class="min-w-120px">نقش</th> --}}
+                    <th class="min-w-120px">نقش</th>
                     <th class="text-end min-w-100px">شماره تلفن</th>
                     <th class="text-end min-w-100px">عملیات</th>
                 </tr>
@@ -102,14 +115,24 @@ new class extends Component {
 
                                 <img src="{{ $user->avatar ? Storage::url($user->avatar) : asset('images/no-photo.png') }}"
                                     alt="" width="40" height="40" style="border-radius: 50%">
-                                </a>
                                 <div class="ms-5">
-                                    <a class="text-gray-800 text-hover-primary fs-5 fw-bolder"
+                                    <a href={{ route('admin.user.edit', $user->id) }}
+                                        class="text-gray-800 text-hover-primary fs-5 fw-bolder"
                                         data-kt-ecommerce-product-filter="product_name">{{ $user->full_name ?? '-' }}</a>
                                 </div>
                             </div>
                         </td>
 
+
+
+                        <td class="" data-order="در انتظار">
+                            <!--begin::Badges-->
+                            @foreach ($user->getRoleNames() as $role)
+                                <div class="badge badge-light-{{ $role == 'customer' ? 'success' : 'primary' }}">
+                                    {{ $role }}</div>
+                            @endforeach
+                            <!--end::Badges-->
+                        </td>
 
                         <td>
                             <div class="text-end pe-0" data-order="rating-3">
@@ -117,23 +140,10 @@ new class extends Component {
                                     {{ $user->phone ?? '-' }}
                                 </span>
                             </div>
-                            {{-- {{ $user->phone }}</td> --}}
-
-
-                            {{-- <td class="" data-order="در انتظار"> --}}
-                            <!--begin::Badges-->
-                            {{-- <div> --}}
-                            {{-- @foreach ($user->getRoleNames() as $role)
-                                    <div class="badge badge-light-{{ $role == 'user' ? 'success' : 'primary' }}">
-                                        {{ $role }}</div>
-                                @endforeach --}}
-                            {{-- </div> --}}
-                            <!--end::Badges-->
-                            {{-- </td> --}}
-
-                            <!--begin::عملیات=-->
+                        </td>
+                        <!--begin::عملیات=-->
                         <td class="text-end">
-                            <a href="#" class="btn btn-sm btn-light btn-active-light-primary"
+                            <a  class="btn btn-sm btn-light btn-active-light-primary"
                                 data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">عملیات
                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                 <span class="svg-icon svg-icon-5 m-0">

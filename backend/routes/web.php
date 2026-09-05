@@ -30,16 +30,16 @@ Route::prefix('admin')->group(function () {
         Route::put('/status/{room}', [RoomController::class, 'changeStatus'])->name('admin.room.change-status');
         Route::delete('/delete/{room}', [RoomController::class, 'destroy'])->name('admin.room.delete');
     });
-        
-        // users
-        Route::prefix('users')->group(function () {
-            Route::get('/', [UserController::class, 'index'])->name('admin.user.index');
-            Route::get('/create', [UserController::class, 'create'])->name('admin.user.create');
-            Route::post('/', [UserController::class, 'adminStore'])->name('admin.user.store');
-            Route::get('/edit/{user}', [UserController::class, 'edit'])->name('admin.user.edit');
-            Route::put('/{user}', [UserController::class, 'update'])->name('admin.user.update');
-            Route::delete('/{user}', [UserController::class, 'destroy'])->name('admin.user.delete');
-        });
+
+    // users
+    Route::prefix('users')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('admin.user.index');
+        Route::get('/create', [UserController::class, 'create'])->name('admin.user.create');
+        Route::post('/', [UserController::class, 'adminStore'])->name('admin.user.store');
+        Route::get('/edit/{user}', [UserController::class, 'edit'])->name('admin.user.edit');
+        Route::put('/{user}', [UserController::class, 'update'])->name('admin.user.update');
+        Route::delete('/{user}', [UserController::class, 'destroy'])->name('admin.user.delete');
+    });
 
 
     //settings

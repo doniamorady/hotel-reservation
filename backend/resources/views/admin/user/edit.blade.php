@@ -138,38 +138,38 @@
 
                         </div>
 
-                        {{-- <div class="card card-flush py-4"> --}}
-                            {{-- <div class="card-header">
+                        <div class="card card-flush py-4">
+                            <div class="card-header">
                                 <div class="card-title">
                                     <h2>نقش</h2>
                                 </div>
 
-                            </div> --}}
+                            </div>
 
-                            {{-- <div class="card-body pt-0">
+                            <div class="card-body pt-0">
                                 <select class="form-select mb-2" name="roles[]" data-control="select2"
                                     data-hide-search="true" data-placeholder="انتخاب"
                                     id="kt_ecommerce_add_category_status_select" multiple>
 
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->name }}"
-                                            {{in_array($role->name , old('roles',$user->roles->pluck('name')->toArray())) ? 'selected' : '' }}>
+                                           {{ in_array($role->id, old('roles', $user->roles->pluck('id')->toArray())) ? 'selected' : '' }}>
                                             {{ $role->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                            </div> --}}
+                            </div>
 
 
-                            {{-- @error('roles')
+                            @error('roles')
                                 <span>
                                     <strong style="color: red; font-size: 10px">
                                         {{ $message }}
                                     </strong>
                                 </span>
-                            @enderror --}}
+                            @enderror
                             <!--end::Card body-->
-                        {{-- </div> --}}
+                        </div>
                     </div>
 
 

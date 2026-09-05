@@ -13,20 +13,26 @@ use Spatie\Permission\Models\Role;
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
-    
+
     /**
      * Seed the application's database.
-    */
+     */
     public function run(): void
     {
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'customer']);
-        
-        $user=User::create(['phone'=> '09123456789',
-        'first_name' => 'admin', 'last_name' => 'moradi']);
+
+        $user = User::create([
+            'phone' => '09123456789',
+            'first_name' => 'admin',
+            'last_name' => 'moradi'
+        ]);
         $user->assignRole('admin');
-        
-        User::factory(10)->create();
+
+        $users = User::factory(10)->create();
+        foreach ($users as $user) {
+            $user->assignRole('customer');
+        }
 
         DB::table('beds')->insert([
             ['type' => 'queen', 'capacity' => 1],
@@ -94,6 +100,5 @@ class DatabaseSeeder extends Seeder
             'max_nights' => 10,
             'max_guests' => 5,
         ]);
-
     }
 }

@@ -24,14 +24,11 @@ class CreateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-
-        $user = $this->route('user');
-
         return [
             'first_name' => ['nullable', 'string'],
             'last_name' => ['nullable', 'string'],
             'avatar' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp'],
-            'phone' => ['required', Rule::unique('users', 'phone')->ignore($user->id), 'regex:/^(?:\+98|98|0)?9\d{9}$/'],
+            'phone' => ['required', 'unique:users,phone', 'regex:/^(?:\+98|98|0)?9\d{9}$/'],
             'password' => ['required', 'string', Password::min(8)->letters()->numbers()->symbols()],
         ];
     }

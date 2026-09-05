@@ -29,9 +29,11 @@ class UpdateUserRequest extends FormRequest
         return [
             'first_name' => ['sometimes', 'string'],
             'last_name' => ['sometimes', 'string'],
+            'roles' => ['sometimes', 'array'],
+            'roles.*' => ['exists:roles,name'],
             'avatar' => ['sometimes', 'image', 'mimes:png,jpg,jpeg,webp'],
             'phone' => ['sometimes', Rule::unique('users', 'phone')->ignore($user->id)],
-            'password' => ['nullable','string', Password::min(8)->letters()->numbers()->symbols()]
+            'password' => ['nullable', 'string', Password::min(8)->letters()->numbers()->symbols()]
         ];
     }
 }
