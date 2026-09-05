@@ -48,12 +48,15 @@
 
                                 <div class="col-md-6">
                                     <label class="form-label">تاریخ شروع</label>
-                                    <input type="text" id="start_date" name="start_date" class="form-control" value="{{ old('start_date') }}">
+            
+                                    <input type="text" id="start_date_view" class="form-control form-control-sm">
+                                    <input type="text" id="start_date" name="start_date" class="form-control d-none" value="{{ old('start_date') }}">
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="form-label">تاریخ پایان</label>
-                                    <input type="text" id="end_date" name="end_date" class="form-control" value="{{ old('end_date') }}">
+                                    <input type="text" id="end_date_view" class="form-control form-control-sm">
+                                    <input type="text" id="end_date" name="end_date" class="form-control d-none" value="{{ old('end_date') }}">
                                 </div>
 
                                 <div class="col-md-6">
@@ -78,17 +81,37 @@
 @endsection
 
 @section('script')
+    <script src="{{ asset('admin-assets/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('admin-assets/jalalidatepicker/persian-date.min.js') }}"></script>
     <script src="{{ asset('admin-assets/jalalidatepicker/persian-datepicker.min.js') }}"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            if (typeof $ !== 'undefined' && $.fn && $.fn.persianDatepicker) {
-                $('#start_date, #end_date').persianDatepicker({
-                    format: 'YYYY/MM/DD',
-                    observer: true,
-                    autoClose: true,
-                });
-            }
+        CKEDITOR.replace('body');
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#start_date_view').persianDatepicker({
+                format: 'YYYY/MM/DD',
+                altField: '#start_date',
+                timePicker: {
+                    enabled: true,
+                    meridiem: {
+                        enabled: true
+                    }
+                }
+            })
+        });
+        
+          $(document).ready(function() {
+            $('#end_date_view').persianDatepicker({
+                format: 'YYYY/MM/DD',
+                altField: '#end_date',
+                timePicker: {
+                    enabled: true,
+                    meridiem: {
+                        enabled: true
+                    }
+                }
+            })
         });
     </script>
 @endsection

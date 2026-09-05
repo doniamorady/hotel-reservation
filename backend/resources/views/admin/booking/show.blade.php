@@ -39,13 +39,13 @@
                             <div class="col-md-3 mb-6">
                                 <div class="fw-bold text-muted mb-2">تاریخ شروع</div>
                                 <div>
-                                    {{ \Illuminate\Support\Facades\Date::parse($booking->start_date)->translatedFormat('Y/m/d') }}
+                                    {{ $booking->start_date_jalali }}
                                 </div>
                             </div>
                             <div class="col-md-3 mb-6">
                                 <div class="fw-bold text-muted mb-2">تاریخ پایان</div>
                                 <div>
-                                    {{ \Illuminate\Support\Facades\Date::parse($booking->end_date)->translatedFormat('Y/m/d') }}
+                                    {{$booking->end_date_jalali }}
                                 </div>
                             </div>
                             <div class="col-md-3 mb-6">

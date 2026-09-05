@@ -23,8 +23,8 @@ class CreateBookingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'start_date' => ['required', 'date', 'before_or_equal:end_date'],
-            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
+            'start_date' => ['required', 'numeric', 'before_or_equal:end_date'],
+            'end_date' => ['required', 'numeric', 'after_or_equal:start_date'],
             'num_guests' => ['required', 'integer', 'min:1'],
             'has_breakfast' => ['required', 'boolean'],
         ];

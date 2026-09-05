@@ -7,6 +7,7 @@ use App\Http\Requests\Api\Booking\CreateBookingRequest;
 use App\Http\Requests\Api\Booking\UpdateBookingRequest;
 use App\Models\Booking;
 use App\Models\Room;
+use Illuminate\Support\Str;
 use App\Models\User;
 use App\Services\BookingService;
 use Carbon\Carbon;
@@ -21,7 +22,7 @@ class BookingController extends Controller
         if ($user && $user->hasRole('admin')) {
             $bookings = Booking::with(['user', 'room'])->latest()->get();
         } else {
-            $bookings = Booking::whereHas('user', function ($q) use ($user){
+            $bookings = Booking::whereHas('user', function ($q) use ($user) {
                 $q->where('id', $user->id);
             })->with(['user', 'room'])->latest()->get();
         }
@@ -37,6 +38,13 @@ class BookingController extends Controller
         return view('admin.booking.create', compact('bookings', 'rooms'));
     }
 
+    public function store(CreateBookingRequest $request, BookingService $bookingService, Room $room)
+    {
+        $data = $request->validated();
+        $booking = $bookingService->createBooking($data, $room);
+        return redirect()->route('admin.bookings.show', $booking)
+            ->with('toast-success', 'رزرو با موفقیت ثبت شد.');
+    }
 
     public function show(Booking $booking)
     {

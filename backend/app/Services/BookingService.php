@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Booking;
 use App\Models\Setting;
+use Carbon\Carbon;
 use Exception;
 
 class BookingService
@@ -27,14 +28,12 @@ class BookingService
             );
         //without auth
         // $data['user_id'] = auth()->user()->id;
-        $data['user_id'] =1;
+        $data['user_id'] = 1;
         $data['room_id'] = $room->id;
 
-
-        $num_nights = strtotime($data['end_date']) - strtotime($data['start_date']);
-        dd($num_nights);
-        //86400 : 24*60*60
-        $data['num_nights'] = (int)((round($num_nights / 86400)));
+        $data['start_date'] = Carbon::createFromTimestampMs($data['start_date'])->startOfDay();
+        $data['end_date'] = Carbon::createFromTimestampMs($data['end_date'])->startOfDay();
+        $data['num_nights'] = $data['start_date']->diffInDays($data['end_date']);
 
         $prices = $this->priceService->calcPrice($data, $room);
 
