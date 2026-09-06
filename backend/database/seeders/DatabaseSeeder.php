@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
@@ -25,7 +26,8 @@ class DatabaseSeeder extends Seeder
         $user = User::create([
             'phone' => '09123456789',
             'first_name' => 'admin',
-            'last_name' => 'moradi'
+            'last_name' => 'moradi',
+            'password' => Hash::make('123456789')
         ]);
         $user->assignRole('admin');
 

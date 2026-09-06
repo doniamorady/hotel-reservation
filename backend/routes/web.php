@@ -1,13 +1,25 @@
 <?php
 
+use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BedController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->group(function () {
+
+
+
+Route::prefix('login')->group(function () {
+    Route::get('/', [AuthController::class, 'loginForm'])->name('admin.auth.login-form');
+    Route::post('/', [AuthController::class, 'login'])->name('admin.auth.login');
+});
+
+
+
+Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
 
     Route::post('/logout')->name('admin.logout');
 
@@ -41,8 +53,8 @@ Route::prefix('admin')->group(function () {
         Route::put('/{user}', [UserController::class, 'update'])->name('admin.user.update');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('admin.user.delete');
     });
-    
-        Route::prefix('bookings')->name('admin.bookings.')->group(function () {
+
+    Route::prefix('bookings')->name('admin.bookings.')->group(function () {
         Route::get('/', [BookingController::class, 'index'])->name('index');
         Route::get('/create', [BookingController::class, 'create'])->name('create');
         Route::post('/room/{room}', [BookingController::class, 'store'])->name('store');
