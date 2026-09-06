@@ -85,7 +85,7 @@
                         <!--end::Menu separator-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            {{-- <a href="{{ route('admin.user.show-profile') }}" class="menu-link px-5">پروفایل من</a> --}}
+                            <a href="{{ route('admin.user.profile.index') }}" class="menu-link px-5">پروفایل من</a>
                         </div>
                         <!--end::Menu item-->
 
