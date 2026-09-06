@@ -14,7 +14,7 @@ class RoomController extends Controller
 
     public function index()
     {
-        $rooms = Room::with('beds')->get();
+        $rooms = Room::with(['beds', 'gallery'])->get();
         return RoomResource::collection($rooms);
     }
 
@@ -30,13 +30,13 @@ class RoomController extends Controller
         $newRoom = Room::create($data);
         $newRoom->beds()->sync($beds);
 
-        return new RoomResource($newRoom->load('beds'));
+        return new RoomResource($newRoom->load(['beds', 'gallery']));
     }
 
 
     public function show(Room $room)
     {
-        return new RoomResource($room->load('beds'));
+        return new RoomResource($room->load(['beds', 'gallery']));
     }
 
 
@@ -53,7 +53,7 @@ class RoomController extends Controller
         }
 
         $room->update($data);
-        return new RoomResource($room->load('beds'));
+        return new RoomResource($room->load(['beds', 'gallery']));
     }
 
 

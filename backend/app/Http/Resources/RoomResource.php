@@ -4,7 +4,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\BedResource;
 
 class RoomResource extends JsonResource
 {
@@ -21,9 +20,10 @@ class RoomResource extends JsonResource
             'status' => $this->status,
             'cover_image' => $this->cover_image,
             'capacity' => $this->capacity,
-            'price' => (float)$this->price,
+            'price' => (float) $this->price,
             'description' => $this->description,
-            'beds' => BedResource::collection($this->whenLoaded('beds'))
+            'beds' => BedResource::collection($this->whenLoaded('beds')),
+            'gallery' => GalleryResource::collection($this->whenLoaded('gallery')),
         ];
     }
 }
