@@ -8,7 +8,6 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
 
@@ -28,7 +27,7 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('admin.user.profile.index');
     Route::put('/profile', [ProfileController::class, 'update'])->name('admin.user.profile.update');
 
-    Route::post('/logout')->name('admin.logout');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
     //bed
     Route::prefix('beds')->group(function () {
