@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -15,28 +16,28 @@ export default function Header() {
           >
             <ul className="nav-menu">
               <li>
-                <a href=''>
+                <Link to='rooms'>
                   اتاق ها
                   <span className="submenu-indicator" />
-                </a>
+                </Link>
               </li>
-              <li>
+              {/* <li>
                 <a href="#">
                   رویدادها
                   <span className="submenu-indicator" />
                 </a>
-              </li>
+              </li> */}
               <li>
-                <a href=''>
+                <Link to='/about-us'>
                   درباره ما
                   <span className="submenu-indicator" />
-                </a>
+                </Link>
               </li>
               <li>
-                <a href=''>
+                <Link to='/contact-us'>
                   تماس با ما
                   <span className="submenu-indicator" />
-                </a>
+                </Link>
               </li>
             </ul>
 
