@@ -16,7 +16,7 @@ class GalleryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'path' => $this->path,
+            'path' => $this->path ? asset('storage/'.$this->path) : null,
             'room_id' => $this->room_id,
         ];
     }

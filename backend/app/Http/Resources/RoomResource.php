@@ -18,7 +18,9 @@ class RoomResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'status' => $this->status,
-            'cover_image' => $this->cover_image,
+            'cover_image' => $this->cover_image
+                ? asset('storage/' . $this->cover_image)
+                : null,
             'capacity' => $this->capacity,
             'price' => (float) $this->price,
             'description' => $this->description,
