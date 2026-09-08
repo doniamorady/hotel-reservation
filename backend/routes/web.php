@@ -46,7 +46,6 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
         Route::post('/', [RoomController::class, 'store'])->name('admin.room.store');
         Route::get('/edit/{room}', [RoomController::class, 'edit'])->name('admin.room.edit');
         Route::put('/{room}', [RoomController::class, 'update'])->name('admin.room.update');
-        Route::put('/status/{room}', [RoomController::class, 'changeStatus'])->name('admin.room.change-status');
         Route::delete('/delete/{room}', [RoomController::class, 'destroy'])->name('admin.room.delete');
     });
 
@@ -67,7 +66,6 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
         Route::get('/{booking}', [BookingController::class, 'show'])->name('show');
         Route::get('/{booking}/edit', [BookingController::class, 'edit'])->name('edit');
         Route::put('/{booking}', [BookingController::class, 'update'])->name('update');
-        Route::put('/{booking}/change-status', [BookingController::class, 'changeStatus'])->name('change-status');
         Route::put('/{booking}/update-status', [BookingController::class, 'updateStatus'])->name('update-status');
         Route::put('/{booking}/add-breakfast', [BookingController::class, 'addBreakfast'])->name('add-breakfast');
     });
