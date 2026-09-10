@@ -28,6 +28,8 @@ class CreateRoomRequest extends FormRequest
             'cover_image' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp'],
             'status' => ['sometimes', 'boolean'],
             'price' => ['required', 'numeric'],
+            'bedrooms' => ['required', 'integer'],
+            'area' => ['required', 'numeric'],
             'beds' => ['required', 'array'],
             'beds.*' => ['integer', 'exists:beds,id'],
             'gallery_images' => ['nullable', 'array'],

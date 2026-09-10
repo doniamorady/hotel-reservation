@@ -75,6 +75,7 @@ class RoomController extends Controller
     public function update(UpdateRoomRequest $request, Room $room)
     {
         $inputs = $request->validated();
+        // dd($inputs);
         $capacity = (int) Bed::whereIn('id', $inputs['beds'])->sum('capacity');
 
         // cover image
@@ -121,6 +122,8 @@ class RoomController extends Controller
             "description" => $inputs['description'],
             "price" => $inputs['price'],
             "capacity" => $capacity,
+            'area' => $inputs['area'],
+            'bedrooms' => $inputs['bedrooms'],
         ]);
 
         if (!empty($inputs['beds'])) {

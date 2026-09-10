@@ -203,23 +203,37 @@
                                                 @enderror
 
                                             </div>
-                                            <div class="mb-10 w-50 ms-5">
-                                                <!--begin::Tags-->
-                                                <label class="required form-label">ظرفیت(به ازای هر نفر)</label>
-                                                <!--end::Tags-->
-                                                <!--begin::Input-->
-                                                <input type="text" name="capacity" class="form-control mb-2"
-                                                    placeholder="2" value="{{ old('capacity', $room->capacity) }}" />
-                                                <!--end::Input-->
+                                            <div class="d-flex w-100">
+                                                <div class="mb-10 w-50 me-5">
+                                                    <label class="required form-label">تعداد خواب</label>
 
-                                                @error('capacity')
-                                                    <span>
-                                                        <strong style="color: red; font-size: 10px">
-                                                            {{ $message }}
-                                                        </strong>
-                                                    </span>
-                                                @enderror
+                                                    <input type="number" name="bedrooms" class="form-control mb-2"
+                                                        placeholder="مثلا 2" value="{{ old('bedrooms', $room->bedrooms) }}" />
 
+                                                    @error('bedrooms')
+                                                        <span>
+                                                            <strong style="color: red; font-size: 10px">
+                                                                {{ $message }}
+                                                            </strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+
+                                                <div class="mb-10 w-50 ms-5">
+                                                    <label class="required form-label">مساحت (متر مربع)</label>
+
+                                                    <input type="number" name="area" class="form-control mb-2"
+                                                        placeholder="مثلا 80" value="{{ old('area', $room->area) }}" />
+
+                                                    @error('area')
+                                                        <span>
+                                                            <strong style="color: red; font-size: 10px">
+                                                                {{ $message }}
+                                                            </strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
                                         <!--end::Input group-->
@@ -323,7 +337,7 @@
                                                     </option>
                                                 @empty
                                                     <div class="alert alert-info">
-                                                        امکان رفاهی‌ای تعریف نشده است.
+                                                        تختی تعریف نشده است
                                                     </div>
                                                 @endforelse
 
@@ -375,7 +389,7 @@
         // فعال‌سازی CKEditor روی textarea
         CKEDITOR.replace('description');
     </script>
-    
+
     <script>
         // فعال‌سازی حذف تصاویر قبلی
         document.querySelectorAll('.remove-old-image').forEach(button => {
@@ -424,7 +438,9 @@
             if (!btn) return;
             const idx = Number(btn.dataset.index);
             const newDt = new DataTransfer();
-            Array.from(dt.files).forEach((f, i) => { if (i !== idx) newDt.items.add(f); });
+            Array.from(dt.files).forEach((f, i) => {
+                if (i !== idx) newDt.items.add(f);
+            });
             dt = newDt;
             galleryInput.files = dt.files;
             renderNewPreviews();

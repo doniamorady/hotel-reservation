@@ -201,23 +201,38 @@
                                                 @enderror
 
                                             </div>
-                                            <div class="mb-10 w-50 ms-5">
-                                                <!--begin::Tags-->
-                                                <label class="required form-label">ظرفیت(به ازای هر نفر)</label>
-                                                <!--end::Tags-->
-                                                <!--begin::Input-->
-                                                <input type="number" name="capacity" class="form-control mb-2"
-                                                    placeholder="2" value="{{ old('capacity') }}" />
-                                                <!--end::Input-->
 
-                                                @error('capacity')
-                                                    <span>
-                                                        <strong style="color: red; font-size: 10px">
-                                                            {{ $message }}
-                                                        </strong>
-                                                    </span>
-                                                @enderror
+                                            <div class="d-flex w-100">
+                                                <div class="mb-10 w-50 me-5">
+                                                    <label class="required form-label">تعداد خواب</label>
 
+                                                    <input type="number" name="bedrooms" class="form-control mb-2"
+                                                        placeholder="مثلا 2" value="{{ old('bedrooms') }}" />
+
+                                                    @error('bedrooms')
+                                                        <span>
+                                                            <strong style="color: red; font-size: 10px">
+                                                                {{ $message }}
+                                                            </strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+
+                                                <div class="mb-10 w-50 ms-5">
+                                                    <label class="required form-label">مساحت (متر مربع)</label>
+
+                                                    <input type="number" name="area" class="form-control mb-2"
+                                                        placeholder="مثلا 80" value="{{ old('area') }}" />
+
+                                                    @error('area')
+                                                        <span>
+                                                            <strong style="color: red; font-size: 10px">
+                                                                {{ $message }}
+                                                            </strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
                                         <!--end::Input group-->

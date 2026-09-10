@@ -43,13 +43,52 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('rooms')->insert([
-            ['name' => '001', 'price' => 200000, 'status' => true, 'capacity' => 2, 'cover_image' => 'rooms/cover_image_1.webp'],
-            ['name' => '002', 'price' => 500000, 'status' => false, 'capacity' => 2, 'cover_image' => 'rooms/cover_image_2.webp'],
-            ['name' => '003', 'price' => 250000, 'status' => true, 'capacity' => 3, 'cover_image' => 'rooms/cover_image_3.jpg'],
-            ['name' => '004', 'price' => 300000, 'status' => false, 'capacity' => 1, 'cover_image' => 'rooms/cover_image_4.jpg'],
-            ['name' => '005', 'price' => 1200000, 'status' => true, 'capacity' => 1, 'cover_image' => 'rooms/cover_image_5.webp'],
+            [
+                'name' => '001',
+                'price' => 200000,
+                'status' => false,
+                'capacity' => 2,
+                'bedrooms' => 1,
+                'area' => 35,
+                'cover_image' => 'rooms/cover_image_1.webp'
+            ],
+            [
+                'name' => '002',
+                'price' => 500000,
+                'status' => true,
+                'capacity' => 2,
+                'bedrooms' => 1,
+                'area' => 45,
+                'cover_image' => 'rooms/cover_image_2.webp'
+            ],
+            [
+                'name' => '003',
+                'price' => 250000,
+                'status' => true,
+                'capacity' => 3,
+                'bedrooms' => 2,
+                'area' => 70,
+                'cover_image' => 'rooms/cover_image_3.jpg'
+            ],
+            [
+                'name' => '004',
+                'price' => 300000,
+                'status' => true,
+                'capacity' => 1,
+                'bedrooms' => 1,
+                'area' => 25,
+                'cover_image' => 'rooms/cover_image_4.jpg'
+            ],
+            [
+                'name' => '005',
+                'price' => 1200000,
+                'status' => true,
+                'capacity' => 4,
+                'bedrooms' => 3,
+                'area' => 120,
+                'cover_image' => 'rooms/cover_image_5.webp'
+            ],
         ]);
-        
         DB::table('comments')->insert([
             [
                 'body' => 'This is a great room!',
@@ -66,8 +105,8 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
         ]);
-        
-        
+
+
         DB::table('galleries')->insert([
             [
                 'room_id' => 1,
@@ -119,16 +158,15 @@ class DatabaseSeeder extends Seeder
                 'user_id' => 1,
                 'room_id' => 1,
                 'num_nights' => 2,
-                'status' => 'unconfirmed',
+                'status' => 'confirmed',
                 'num_guests' => 3,
                 'has_breakfast' => true,
                 'breakfast_unit_price' => 150000,
                 'total_breakfast_price' => 900000,
-
                 'room_unit_price' => 1235000,
                 'total_room_price' => Room::findOrFail(1)->price * 2,
-
-                'total_price' => 2135000
+                'total_price' => 2135000,
+                'created_at' => Carbon::now()
             ],
             [
                 'start_date' => Carbon::now()->subDays(3),
@@ -143,7 +181,9 @@ class DatabaseSeeder extends Seeder
                 'total_breakfast_price' => 0,
                 'room_unit_price' => Room::findOrFail(2)->price,
                 'total_room_price' => Room::findOrFail(2)->price * 5,
-                'total_price' => 1235000
+                'total_price' => 1235000,
+                'created_at' => Carbon::now()
+
             ],
         ]);
 

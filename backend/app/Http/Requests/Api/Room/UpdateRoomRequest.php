@@ -28,10 +28,13 @@ class UpdateRoomRequest extends FormRequest
             'status' => ['sometimes', 'boolean'],
             'cover_image' => ['sometimes', 'image', 'mimes:png,jpg,jpeg,webp'],
             'price' => ['sometimes', 'numeric'],
+            'bedrooms' => ['sometimes', 'integer'],
+            'area' => ['sometimes', 'integer'],
             'beds' => ['sometimes', 'array'],
             'beds.*' => ['integer', 'exists:beds,id'],
-            'gallery_images' =>['sometimes', 'array'],
-            'gallery_images.*' =>['image', 'mimes:png,jpg,jpeg,webp']
+            'gallery_images' => ['sometimes', 'array'],
+            'gallery_images.*' => ['image', 'mimes:png,jpg,jpeg,webp']
         ];
+        
     }
 }
