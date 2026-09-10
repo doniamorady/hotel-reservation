@@ -1,15 +1,7 @@
 import { Link } from "react-router-dom";
+import LinkComponent from "../components/Link";
 
 export default function Header() {
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  const handleLogout = () => {
-    localStorage.removeItem("auth_token");
-    localStorage.removeItem("user");
-
-    window.location.reload();
-  };
-
   return (
     <div className="header header-light">
       <div className="container">
@@ -25,29 +17,20 @@ export default function Header() {
             style={{ transitionProperty: "none" }}
           >
             <ul className="nav-menu">
-              <li>
-                <Link to="/rooms">
-                  اتاق ها
-                  <span className="submenu-indicator" />
-                </Link>
-              </li>
+              <LinkComponent path="/rooms" label="اتاق ها">
+                <span className="submenu-indicator" />
+              </LinkComponent>
 
-              <li>
-                <Link to="/about-us">
-                  درباره ما
-                  <span className="submenu-indicator" />
-                </Link>
-              </li>
+              <LinkComponent path="/about-us" label="درباره ما">
+                <span className="submenu-indicator" />
+              </LinkComponent>
 
-              <li>
-                <Link to="/contact-us">
-                  تماس با ما
-                  <span className="submenu-indicator" />
-                </Link>
-              </li>
+              <LinkComponent path="/contact-us" label="تماس با ما">
+                <span className="submenu-indicator" />
+              </LinkComponent>
             </ul>
 
-            {user ? (
+            {/* {user ? (
               <ul className="nav-menu nav-menu-social align-to-left">
                 <li>
                   <div className="btn-group account-drop">
@@ -77,55 +60,44 @@ export default function Header() {
                       </div>
 
                       <ul>
-                        <li>
-                          <Link to="/profile">
-                            <i className="fa-regular fa-id-card ms-2" />
-                            پروفایل
-                          </Link>
-                        </li>
+                        <LinkComponent path="/profile" label="پروفایل">
+                          <i className="fa-regular fa-id-card ms-2" />
+                        </LinkComponent>
 
-                        <li>
-                          <Link to="/bookings">
-                            <i className="fa-solid fa-ticket ms-2" />
-                            لیست رزروها
-                          </Link>
-                        </li>
+                        <LinkComponent path="/bookings" label="لیست رزرو ها">
+                          <i className="fa-regular fa-id-card ms-2" />
+                        </LinkComponent>
 
-                        {/* <li>
-                          <Link to="/favorites">
-                            <i className="fa-solid fa-shield-heart ms-2" />
-                            لیست علاقه مندی ها
-                          </Link>
-                        </li> */}
+                        <LinkComponent
+                          path="/favorites"
+                          label="لیست علاقه مندی ها"
+                        >
+                          <i className="fa-regular fa-id-card ms-2" />
+                        </LinkComponent>
 
-                        <li>
-                          <button
-                            onClick={handleLogout}
-                            className="dropdown-item"
-                          >
-                            <i className="fa-solid fa-power-off ms-2" />
-                            خروج
-                          </button>
-                        </li>
+                        <LinkComponent path="/logout" label="خروج">
+                          <i className="fa-solid fa-power-off ms-2" />
+                        </LinkComponent>
+                        
+                        
                       </ul>
                     </div>
                   </div>
                 </li>
               </ul>
-            ) : (
-              <ul className="nav-menu nav-menu-social align-to-left">
-                <li>
-                  <div className="btn-group account-drop">
-                    <Link
-                      to="/login"
-                      className="btn btn-sm btn-primary text-white"
-                    >
-                      ورود | ثبت‌نام
-                    </Link>
-                  </div>
-                </li>
-              </ul>
-            )}
+            ) : ( */}
+            
+            
+            <ul className="nav-menu nav-menu-social align-to-left">
+              <div className="btn-group account-drop">
+                <LinkComponent
+                  path="/login"
+                  className="btn btn-sm btn-primary text-white"
+                  label="ورود | ثبت‌نام"
+                ></LinkComponent>
+              </div>
+            </ul>
+            {/* )} */}
           </div>
         </nav>
       </div>
