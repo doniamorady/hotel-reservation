@@ -25,4 +25,9 @@ class Room extends Model
     public function gallery(){
         return $this->hasMany(Gallery::class);
     }
+    
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

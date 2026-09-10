@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Room\CreateRoomRequest;
 use App\Http\Requests\Api\Room\UpdateRoomRequest;
+use App\Http\Requests\CommentRequest;
 use App\Http\Resources\RoomResource;
 use App\Models\Room;
 use App\Models\Bed;
@@ -14,7 +15,7 @@ class RoomController extends Controller
 
     public function index()
     {
-        $rooms = Room::with(['beds', 'gallery'])->get();
+        $rooms = Room::where('status', 1)->with(['beds', 'gallery'])->get();
         return RoomResource::collection($rooms);
     }
 
@@ -61,5 +62,14 @@ class RoomController extends Controller
     {
         $room->delete();
         return response()->json(['message' => 'delete successfully'], 200);
+    }
+    
+    public function commentStore(Room $room, CommentRequest $request){
+        
+        $data = $request->validated();
+        $data['user_id'] = auth()->id();
+        $data['room_id'] = $room->id;
+        $comment = $room->comments()->create($data);
+        return response()->json(['message' => 'Comment added successfully', 'comment' => $comment], 201);
     }
 }

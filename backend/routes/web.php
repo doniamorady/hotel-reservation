@@ -8,28 +8,24 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CommentController;
 use Illuminate\Support\Facades\Route;
-
-
-
 
 Route::prefix('login')->group(function () {
     Route::get('/', [AuthController::class, 'loginForm'])->name('admin.auth.login-form');
     Route::post('/', [AuthController::class, 'login'])->name('admin.auth.login');
 });
 
-
-
-Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
-    
+
     Route::get('/profile', [ProfileController::class, 'index'])->name('admin.user.profile.index');
     Route::put('/profile', [ProfileController::class, 'update'])->name('admin.user.profile.update');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
-    //bed
+    // bed
     Route::prefix('beds')->group(function () {
         Route::get('/', [BedController::class, 'index'])->name('admin.bed.index');
         Route::get('/create', [BedController::class, 'create'])->name('admin.bed.create');
@@ -39,7 +35,7 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
         Route::delete('/{bed}', [BedController::class, 'destroy'])->name('admin.bed.delete');
     });
 
-    //room
+    // room
     Route::prefix('rooms')->group(function () {
         Route::get('/', [RoomController::class, 'index'])->name('admin.room.index');
         Route::get('/create', [RoomController::class, 'create'])->name('admin.room.create');
@@ -70,10 +66,14 @@ Route::middleware(['auth','role:admin'])->prefix('admin')->group(function () {
         Route::put('/{booking}/add-breakfast', [BookingController::class, 'addBreakfast'])->name('add-breakfast');
     });
 
-
-    //settings
+    // settings
     Route::prefix('settings')->group(function () {
         Route::get('/', [SettingController::class, 'index'])->name('admin.setting.index');
         Route::put('/', [SettingController::class, 'update'])->name('admin.setting.update');
+    });
+
+    // comment
+    Route::prefix('comment')->group(function () {
+        Route::get('/', [CommentController::class, 'index'])->name('admin.comment.index');
     });
 });

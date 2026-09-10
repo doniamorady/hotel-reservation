@@ -42,7 +42,7 @@
                    id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expو="false">
                    <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
                        <div class="menu-item">
-                           <a href="" class="menu-link" style="width:100%;">
+                           <a href="{{ route('admin.dashboard') }}" class="menu-link" style="width:100%;">
                                <span class="menu-icon">
                                    <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                    <span class="svg-icon svg-icon-2">
@@ -241,7 +241,7 @@
 
 
 
-                   {{-- 
+                 
 
                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                        <span class="menu-link">
@@ -278,7 +278,7 @@
                            </div>
 
                        </div>
-                   </div> --}}
+                   </div> 
 
 
                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">

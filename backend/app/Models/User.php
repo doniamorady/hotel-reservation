@@ -50,9 +50,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Booking::class);
     }
-    
+
     public function getFullNameAttribute()
     {
-        return $this->first_name.' '.$this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

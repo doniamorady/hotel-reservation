@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function SingleRoomForRoomList({ room }) {
   return (
     <div className="col-xl-12 col-lg-12 col-12">
@@ -40,7 +42,6 @@ export default function SingleRoomForRoomList({ room }) {
                 <li className="col-auto">
                   <p className="text-muted-2 text-md fw-bold">.</p>
                 </li>
-              
               </ul>
               <div className="detail ellipsis-container mt-3">
                 <span className="ellipsis">پارکینگ</span>
@@ -50,7 +51,9 @@ export default function SingleRoomForRoomList({ room }) {
                 <span className="ellipsis">مبلمان</span>
               </div>
               <div className="position-relative mt-3">
-                <div className="fw-medium text-dark">تخت {room.beds.map(bed=> bed.type+', ')}</div>
+                <div className="fw-medium text-dark">
+                  تخت {room.beds.map((bed) => bed.type + ", ")}
+                </div>
                 <div className="text-md text-muted">سرویس روزانه اتاق</div>
               </div>
               <div className="position-relative mt-4">
@@ -96,16 +99,18 @@ export default function SingleRoomForRoomList({ room }) {
                 <div className="text-dark fs-4">{room.price} تومان</div>
               </div>
               <div className="d-flex align-items-start align-items-md-end justify-content-start justify-content-md-end flex-column mb-2">
-                <div className="text-muted-2 text-sm">+ {room.price*(0.1)} کارمزد</div>
+                <div className="text-muted-2 text-sm">
+                  + {room.price * 0.1} کارمزد
+                </div>
                 <div className="text-muted-2 text-sm">برای 1 شب</div>
               </div>
               <div className="d-flex align-items-start align-items-md-end text-start text-md-end flex-column">
-                <a
-                  href="#"
+                <Link
+                  to={`/rooms/${room.id}`}
                   className="btn btn-md btn-primary full-width fw-medium px-lg-4"
                 >
                   مشاهده<i className="fa-solid fa-arrow-trend-up me-2"></i>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

@@ -49,6 +49,25 @@ class DatabaseSeeder extends Seeder
             ['name' => '004', 'price' => 300000, 'status' => false, 'capacity' => 1, 'cover_image' => 'rooms/cover_image_4.jpg'],
             ['name' => '005', 'price' => 1200000, 'status' => true, 'capacity' => 1, 'cover_image' => 'rooms/cover_image_5.webp'],
         ]);
+        
+        DB::table('comments')->insert([
+            [
+                'body' => 'This is a great room!',
+                'user_id' => 1,
+                'room_id' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'body' => 'Had a wonderful stay.',
+                'user_id' => 2,
+                'room_id' => 2,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+        ]);
+        
+        
         DB::table('galleries')->insert([
             [
                 'room_id' => 1,
