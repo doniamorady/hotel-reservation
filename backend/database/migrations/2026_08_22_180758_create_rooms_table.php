@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+
 return new class extends Migration
 {
     /**
@@ -13,9 +14,11 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->unsignedTinyInteger('bedrooms')->default(1);
+            $table->unsignedTinyInteger('area');
             $table->text('description')->nullable();
             $table->text('cover_image')->nullable();
-            $table->decimal('price',10,2);
+            $table->decimal('price', 10, 2);
             $table->boolean('status')->default(true);
             $table->unsignedTinyInteger('capacity')->default(1);
             $table->timestamps();
