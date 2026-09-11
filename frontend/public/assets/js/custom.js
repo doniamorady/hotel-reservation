@@ -14,13 +14,7 @@
 
 
 
-	// Carousel
-	$('.main-carousel').flickity({
-		// options
-		cellAlign: 'center',
-		contain: true,
-		rightToLeft: true
-	});
+
 
 
 	// Tooltip

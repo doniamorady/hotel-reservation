@@ -17,15 +17,15 @@ export default function Header() {
             style={{ transitionProperty: "none" }}
           >
             <ul className="nav-menu">
-              <LinkComponent path="/rooms" label="اتاق ها">
+              <LinkComponent to="/rooms" label="اتاق ها">
                 <span className="submenu-indicator" />
               </LinkComponent>
 
-              <LinkComponent path="/about-us" label="درباره ما">
+              <LinkComponent to="/about-us" label="درباره ما">
                 <span className="submenu-indicator" />
               </LinkComponent>
 
-              <LinkComponent path="/contact-us" label="تماس با ما">
+              <LinkComponent to="/contact-us" label="تماس با ما">
                 <span className="submenu-indicator" />
               </LinkComponent>
             </ul>
@@ -60,22 +60,22 @@ export default function Header() {
                       </div>
 
                       <ul>
-                        <LinkComponent path="/profile" label="پروفایل">
+                        <LinkComponent to="/profile" label="پروفایل">
                           <i className="fa-regular fa-id-card ms-2" />
                         </LinkComponent>
 
-                        <LinkComponent path="/bookings" label="لیست رزرو ها">
+                        <LinkComponent to="/bookings" label="لیست رزرو ها">
                           <i className="fa-regular fa-id-card ms-2" />
                         </LinkComponent>
 
                         <LinkComponent
-                          path="/favorites"
+                          to="/favorites"
                           label="لیست علاقه مندی ها"
                         >
                           <i className="fa-regular fa-id-card ms-2" />
                         </LinkComponent>
 
-                        <LinkComponent path="/logout" label="خروج">
+                        <LinkComponent to="/logout" label="خروج">
                           <i className="fa-solid fa-power-off ms-2" />
                         </LinkComponent>
                         
@@ -91,7 +91,7 @@ export default function Header() {
             <ul className="nav-menu nav-menu-social align-to-left">
               <div className="btn-group account-drop">
                 <LinkComponent
-                  path="/login"
+                  to="/login"
                   className="btn btn-sm btn-primary text-white"
                   label="ورود | ثبت‌نام"
                 ></LinkComponent>
