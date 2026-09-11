@@ -28,6 +28,7 @@ class RoomResource extends JsonResource
             'description' => $this->description,
             'beds' => BedResource::collection($this->whenLoaded('beds')),
             'gallery' => GalleryResource::collection($this->whenLoaded('gallery')),
+            'comments' => CommentResource::collection($this->whenLoaded('comments'))
         ];
     }
 }

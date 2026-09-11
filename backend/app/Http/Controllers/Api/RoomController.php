@@ -15,7 +15,7 @@ class RoomController extends Controller
 
     public function index()
     {
-        $rooms = Room::where('status', 1)->with(['beds', 'gallery'])->get();
+        $rooms = Room::where('status', 1)->with(['beds', 'gallery', 'comments'])->get();
         return RoomResource::collection($rooms);
     }
 
