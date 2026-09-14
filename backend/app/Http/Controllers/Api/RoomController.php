@@ -21,7 +21,7 @@ class RoomController extends Controller
         if ($request->filled('bedrooms'))
             $rooms->where('bedrooms', $request->bedrooms);
 
-        $rooms=$rooms->paginate(2);
+        $rooms=$rooms->paginate(10);
         return RoomResource::collection($rooms);
     }
 

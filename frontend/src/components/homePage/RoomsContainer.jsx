@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
-import Room from "../../components/Room";
+import Room from "../Room";
 import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";

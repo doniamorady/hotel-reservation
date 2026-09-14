@@ -72,6 +72,13 @@ Default Style
 .dark #preloader {
   background-color: #232323;
 }
+.pagination {
+    display: flex !important;
+}
+
+.pagination .page-item {
+    display: inline-flex;
+}
 
 /*-------------- Not Use -----------
 #preloader {
