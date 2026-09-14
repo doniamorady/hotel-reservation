@@ -9,13 +9,19 @@ use App\Http\Requests\CommentRequest;
 use App\Http\Resources\RoomResource;
 use App\Models\Room;
 use App\Models\Bed;
+use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $rooms = Room::where('status', 1)->with(['beds', 'gallery', 'comments'])->get();
+        $rooms = Room::query();
+        $rooms->where('status', 1)->with(['beds', 'gallery', 'comments']);
+        if ($request->filled('bedrooms'))
+            $rooms->where('bedrooms', $request->bedrooms);
+
+        $rooms=$rooms->paginate(2);
         return RoomResource::collection($rooms);
     }
 
@@ -63,9 +69,10 @@ class RoomController extends Controller
         $room->delete();
         return response()->json(['message' => 'delete successfully'], 200);
     }
-    
-    public function commentStore(Room $room, CommentRequest $request){
-        
+
+    public function commentStore(Room $room, CommentRequest $request)
+    {
+
         $data = $request->validated();
         $data['user_id'] = auth()->id();
         $data['room_id'] = $room->id;

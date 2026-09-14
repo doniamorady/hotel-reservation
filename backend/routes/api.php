@@ -10,8 +10,8 @@ use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::prefix('auth')->group(function(){
-    
+Route::prefix('auth')->group(function () {
+
     Route::post('/send-otp', [AuthController::class, 'sendOtp']);
     Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
 });
@@ -27,10 +27,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/', [ProfileController::class, 'updateProfile']);
     });
 
-    Route::prefix('comments')->group(function(){
-        Route::get('/',[CommentController::class, 'index']);
+    Route::prefix('comments')->group(function () {
+        Route::get('/', [CommentController::class, 'index']);
     });
-    
+
     Route::prefix('bookings')->group(function () {
         Route::get('/', [BookingController::class, 'index']);
         Route::post('/room/{room}', [BookingController::class, 'store']);
@@ -71,7 +71,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::put('/{booking}/change-status', [BookingController::class, 'updateStatus']);
         });
     });
-
 });
 
 
@@ -80,3 +79,5 @@ Route::prefix('rooms')->group(function () {
     Route::get('/{room}', [RoomController::class, 'show']);
     Route::post('/{room}/comment', [RoomController::class, 'commentStore']);
 });
+
+Route::get('beds', [BedController::class, 'index']);

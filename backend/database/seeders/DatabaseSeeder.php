@@ -46,11 +46,11 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => '001',
                 'price' => 200000,
-                'status' => false,
+                'status' => true,
                 'capacity' => 2,
                 'bedrooms' => 1,
                 'area' => 35,
-                'cover_image' => 'rooms/cover_image_1.webp'
+                'cover_image' => 'rooms/cover_image_6.jpg'
             ],
             [
                 'name' => '002',
