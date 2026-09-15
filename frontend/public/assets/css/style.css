@@ -15,6 +15,12 @@ Default Style
 	font-weight: 400;
 	font-style: normal
 }
+.booking-input {
+    height: 42px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 8px;
+}
 :root,
 [data-bs-theme=light] {
   --bs-primary: #0466c8;

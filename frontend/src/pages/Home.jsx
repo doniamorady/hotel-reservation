@@ -11,7 +11,7 @@ export default function Home() {
     async function loadRooms() {
       try {
         const data = await getRooms();
-        setRooms(data);
+        setRooms(data.data);
       } catch (error) {
         console.error(error);
       }
@@ -19,6 +19,7 @@ export default function Home() {
 
     loadRooms();
   }, []);
+  
 
   return (
     <>

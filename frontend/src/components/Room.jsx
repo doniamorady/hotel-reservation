@@ -5,7 +5,7 @@ export default function Room({ room }) {
     <div>
       <div className="pop-touritem">
         <Link
-          to={`rooms/${room.id}`}
+          to={`/rooms/${room.id}`}
           className="card rounded-3 border br-dashed m-0"
         >
           <div className="flight-thumb-wrapper">
