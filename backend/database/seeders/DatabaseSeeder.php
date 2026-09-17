@@ -50,12 +50,20 @@ class DatabaseSeeder extends Seeder
                 'capacity' => 2,
                 'bedrooms' => 1,
                 'area' => 35,
+<<<<<<< HEAD
                 'cover_image' => 'rooms/cover_image_6.jpg'
+=======
+                'cover_image' => 'rooms/cover_image_1.webp'
+>>>>>>> ef2b1d388efc2efbd7a4de0a2c4e58b79df930e7
             ],
             [
                 'name' => '002',
                 'price' => 500000,
+<<<<<<< HEAD
                 'status' => true,
+=======
+                'status' => false,
+>>>>>>> ef2b1d388efc2efbd7a4de0a2c4e58b79df930e7
                 'capacity' => 2,
                 'bedrooms' => 1,
                 'area' => 45,
@@ -73,7 +81,11 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => '004',
                 'price' => 300000,
+<<<<<<< HEAD
                 'status' => true,
+=======
+                'status' => false,
+>>>>>>> ef2b1d388efc2efbd7a4de0a2c4e58b79df930e7
                 'capacity' => 1,
                 'bedrooms' => 1,
                 'area' => 25,
