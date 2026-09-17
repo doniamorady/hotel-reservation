@@ -44,7 +44,7 @@ class AuthController extends Controller
 
         if (!$user) {
             return response()->json([
-                'message' => 'Invalid OTP'
+                'message' => 'کد وارد شده معتبر نمی باشد'
             ], 422);
         }
         $user->tokens()->delete();

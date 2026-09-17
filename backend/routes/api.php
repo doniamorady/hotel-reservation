@@ -49,7 +49,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         });
 
         Route::prefix('settings')->group(function () {
-            Route::get('/', [SettingController::class, 'index']);
             Route::put('/', [SettingController::class, 'update']);
         });
 
@@ -78,6 +77,10 @@ Route::prefix('rooms')->group(function () {
     Route::get('/', [RoomController::class, 'index']);
     Route::get('/{room}', [RoomController::class, 'show']);
     Route::post('/{room}/comment', [RoomController::class, 'commentStore']);
+});
+
+Route::prefix('settings')->group(function () {
+    Route::get('/', [SettingController::class, 'index']);
 });
 
 Route::get('beds', [BedController::class, 'index']);

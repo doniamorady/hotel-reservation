@@ -1,152 +1,105 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import HeadTag from "../../layouts/HeadTag";
-import { sendOtp, verifyOtp } from "../../services/apiAuth";
-import api from "../../services/api";
+import { sendOtp } from "../../services/apiAuth";
+import OtpVerification from "./OtpVerification";
+import LoginHeader from "../../components/auth/LoginHeader";
 
 export default function Login() {
-  const navigate = useNavigate();
-
-  const [step, setStep] = useState(1);
   const [phone, setPhone] = useState("");
-  const [otp, setOtp] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [step, setStep] = useState(1);
 
-  // ارسال کد تایید
-  const handleSendOtp = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
+    const phoneRegex = /^(0|\+98|98)9\d{9}$/;
+    if (!phone) {
+      setError("شماره تلفن الزامی میباشد");
+      return;
+    }
+    if (!phoneRegex.test(phone)) {
+      setError("فرمت شماره وارد شده صحیح نمیباشد");
+      return;
+    }
 
     try {
-      setLoading(true);
-
-      await sendOtp(phone);
-
+      const res = await sendOtp(phone);
       setStep(2);
+      console.log(res);
     } catch (error) {
-      alert(error.response?.data?.message || "خطا در ارسال کد");
-    } finally {
-      setLoading(false);
+      setError(error.response?.data?.message || "خطا در ارسال کد تایید");
     }
-  };
 
-  // تایید کد و لاگین
-  const handleVerifyOtp = async (e) => {
-    e.preventDefault();
+    setError("");
+  }
 
-    try {
-      setLoading(true);
-
-      const data = await verifyOtp(otp, phone);
-
-      // ذخیره توکن
-      localStorage.setItem("auth_token", data.token);
-
-      // ذخیره اطلاعات کاربر
-      localStorage.setItem("user", JSON.stringify(data.user));
-
-      // ست کردن هدر Authorization
-      api.defaults.headers.common["Authorization"] =
-        `${data.token_type} ${data.token}`;
-
-      // انتقال به صفحه اصلی
-      navigate("/");
-    } catch (error) {
-      alert(error.response?.data?.message || "کد وارد شده صحیح نیست.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  if (step === 2) return <OtpVerification phone={phone} setStep={setStep} />;
 
   return (
     <>
       <HeadTag />
 
-      <section className="py-5">
+      <section className="py-5 min-vh-100 d-flex align-items-center">
         <div className="container">
-          <div className="row justify-content-center align-items-center m-auto mt-5">
-            <div className="col-lg-4 col-md-6">
-              <div
-                className="bg-mode card shadow-sm rounded-3 overflow-hidden"
-                style={{ width: "100%" }}
-              >
-                <div className="p-4 p-sm-5">
-                  <div className="text-center mb-4">
-                    <img
-                      src="/logo.png"
-                      alt="logo"
-                      style={{ width: "100px" }}
-                    />
-                  </div>
+          <div className="row justify-content-center">
+            <div className="col-xl-4 col-lg-5 col-md-6">
+              <div className="card border border-light-subtle shadow-sm rounded-4 overflow-hidden">
+                <div className="card-body p-4 p-sm-5">
+                  {/* Logo */}
 
-                  <h3 className="text-center mb-4">
-                    {step === 1 ? "ورود" : "تایید کد"}
-                  </h3>
+                  <LoginHeader />
+                  
+                  
+                  <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                      <label className="form-label text-dark fw-medium">
+                        شماره موبایل
+                      </label>
 
-                  {/* مرحله اول */}
-                  {step === 1 && (
-                    <form onSubmit={handleSendOtp}>
-                      <div className="mb-3">
-                        <label className="form-label">شماره موبایل</label>
+                      <div className="position-relative">
+                        <i
+                          className="fa-solid fa-mobile-screen position-absolute top-50 translate-middle-y text-muted"
+                          style={{
+                            right: "15px",
+                          }}
+                        ></i>
 
                         <input
-                          type="text"
-                          className="form-control"
+                          type="tel"
+                          className="form-control text-end login-input"
+                          placeholder="مثلا 09123456789"
                           value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          placeholder="09123456789"
-                          style={{ height: "48px" }}
+                          onChange={(e) => {
+                            setPhone(e.target.value);
+                            setError("");
+                          }}
+                          style={{
+                            height: "52px",
+                            paddingRight: "45px",
+                          }}
                         />
+                        {error && (
+                          <small className="text-danger d-block mt-1 text-xs">
+                            <i className="fa-solid fa-circle-exclamation ms-1"></i>
+                            {error}
+                          </small>
+                        )}
                       </div>
+                    </div>
 
-                      <button
-                        type="submit"
-                        disabled={loading}
-                        className="btn btn-primary w-100"
-                      >
-                        {loading ? "در حال ارسال..." : "ارسال کد تایید"}
-                      </button>
-                    </form>
-                  )}
+                    <button
+                      type="submit"
+                      className="btn btn-primary w-100 rounded-3 py-3 fw-medium"
+                    >
+                      ارسال کد تایید
+                      <i className="fa-solid fa-arrow-left me-2"></i>
+                    </button>
+                  </form>
 
-                  {/* مرحله دوم */}
-                  {step === 2 && (
-                    <form onSubmit={handleVerifyOtp}>
-                      <div className="alert alert-success">
-                        کد تایید به شماره
-                        <strong> {phone} </strong>
-                        ارسال شد.
-                      </div>
-
-                      <div className="mb-3">
-                        <label className="form-label">کد تایید</label>
-
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={otp}
-                          onChange={(e) => setOtp(e.target.value)}
-                          placeholder="123456"
-                          style={{ height: "48px" }}
-                        />
-                      </div>
-
-                      <button
-                        type="submit"
-                        disabled={loading}
-                        className="btn btn-success w-100"
-                      >
-                        {loading ? "در حال بررسی..." : "تایید و ورود"}
-                      </button>
-
-                      <button
-                        type="button"
-                        className="btn btn-link w-100 mt-3"
-                        onClick={() => setStep(1)}
-                      >
-                        تغییر شماره موبایل
-                      </button>
-                    </form>
-                  )}
+                  <div className="text-center mt-4">
+                    <p className="text-muted small mb-0">
+                      ورود سریع و امن با شماره موبایل
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
