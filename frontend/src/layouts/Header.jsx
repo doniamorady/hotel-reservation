@@ -1,7 +1,24 @@
 import { Link } from "react-router-dom";
 import LinkComponent from "../components/Link";
+import { useEffect, useState } from "react";
+import { getMe } from "../services/apiAuth";
 
 export default function Header() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function getUser() {
+      try {
+        const res = await getMe();
+        setUser(res);
+      } catch (error) {
+        console.log(error);
+        setUser(null);
+      }
+    }
+    getUser();
+  }, []);
+
   return (
     <div className="header header-light">
       <div className="container">
@@ -30,7 +47,7 @@ export default function Header() {
               </LinkComponent>
             </ul>
 
-            {/* {user ? (
+            {user ? (
               <ul className="nav-menu nav-menu-social align-to-left">
                 <li>
                   <div className="btn-group account-drop">
@@ -78,26 +95,22 @@ export default function Header() {
                         <LinkComponent to="/logout" label="خروج">
                           <i className="fa-solid fa-power-off ms-2" />
                         </LinkComponent>
-                        
-                        
                       </ul>
                     </div>
                   </div>
                 </li>
               </ul>
-            ) : ( */}
-            
-            
-            <ul className="nav-menu nav-menu-social align-to-left">
-              <div className="btn-group account-drop">
-                <LinkComponent
-                  to="/login"
-                  className="btn btn-sm btn-primary text-white"
-                  label="ورود | ثبت‌نام"
-                ></LinkComponent>
-              </div>
-            </ul>
-            {/* )} */}
+            ) : (
+              <ul className="nav-menu nav-menu-social align-to-left">
+                <div className="btn-group account-drop">
+                  <LinkComponent
+                    to="/login"
+                    className="btn btn-sm btn-primary text-white"
+                    label="ورود | ثبت‌نام"
+                  ></LinkComponent>
+                </div>
+              </ul>
+            )}
           </div>
         </nav>
       </div>

@@ -4,7 +4,6 @@ const scriptPaths = [
   "/assets/js/jquery.min.js",
   "/assets/js/popper.min.js",
   "/assets/js/bootstrap.min.js",
-  // "/assets/js/dropzone.min.js",
   "/assets/js/flatpickr.js",
   "/assets/js/lightbox.min.js",
   "/assets/js/rangeslider.js",

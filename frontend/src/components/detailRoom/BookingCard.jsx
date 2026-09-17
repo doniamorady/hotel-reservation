@@ -4,10 +4,9 @@ import persianModule from "react-date-object/calendars/persian";
 import DateObject from "react-date-object";
 import { useEffect, useState } from "react";
 import { getSettings } from "../../services/apiSetting";
-import BreakfastInfo from "./BreakfastInfo";
 import BookingSummery from "./BookingSummery";
-import BookingError from "./BookingError";
-import CardFooter from "./CardFooter";
+import { Link } from "react-router-dom";
+import { getMe } from "../../services/apiAuth";
 
 const persian = persianModule.default;
 const DatePicker = DatePickerModule.default;
@@ -17,6 +16,7 @@ export default function BookingCard({ room }) {
   const [numGuests, setNumGuests] = useState(1);
   const [settings, setSettings] = useState({});
   const [errors, setErrors] = useState({});
+  const [user, setUser] = useState(null);
 
   const today = new DateObject({ calendar: persian, locale: persian_fa });
   const tomorrow = new DateObject({
@@ -33,6 +33,14 @@ export default function BookingCard({ room }) {
       setSettings(res.data);
     }
     loadSettings();
+  }, []);
+
+  useEffect(() => {
+    async function loadMe() {
+      const res = await getMe();
+      setUser(res.user);
+    }
+    loadMe();
   }, []);
 
   useEffect(() => {
@@ -84,130 +92,136 @@ export default function BookingCard({ room }) {
           </div>
 
           <div className="d-block">
-            <form>
-              <div className="row g-3">
-                <div className="col-12">
-                  <label className="form-label text-dark fw-medium mb-1 text-sm">
-                    {" "}
-                    تاریخ شروع اقامت
-                  </label>
+            <div className="row g-3">
+              <div className="col-12">
+                <label className="form-label text-dark fw-medium mb-1 text-sm">
+                  {" "}
+                  تاریخ شروع اقامت
+                </label>
 
-                  <DatePicker
-                    locale={persian_fa}
-                    calendar={persian}
-                    value={startDate}
-                    onChange={setStartDate}
-                    currentDate={new Date()}
-                    format="YYYY/MM/DD"
-                    inputClass="form-control"
-                    containerClassName="w-100"
-                    placeholder="انتخاب تاریخ شروع"
-                  />
-                </div>
+                <DatePicker
+                  locale={persian_fa}
+                  calendar={persian}
+                  value={startDate}
+                  onChange={setStartDate}
+                  currentDate={new Date()}
+                  format="YYYY/MM/DD"
+                  inputClass="form-control"
+                  containerClassName="w-100"
+                  placeholder="انتخاب تاریخ شروع"
+                />
+              </div>
 
-                <div className="col-12">
-                  <label className="form-label text-dark fw-medium mb-1 text-sm">
-                    {" "}
-                    تاریخ پایان اقامت
-                  </label>
+              <div className="col-12">
+                <label className="form-label text-dark fw-medium mb-1 text-sm">
+                  {" "}
+                  تاریخ پایان اقامت
+                </label>
 
-                  <DatePicker
-                    locale={persian_fa}
-                    calendar={persian}
-                    value={endDate}
-                    onChange={setEndDate}
-                    format="YYYY/MM/DD"
-                    inputClass="form-control"
-                    containerClassName="w-100"
-                    placeholder="انتخاب تاریخ پایان"
-                  />
-                  {errors?.startDate && (
-                    <small className="text-danger d-block mt-1 text-xs">
-                      <i className="fa-solid fa-circle-exclamation ms-1"></i>
-                      {errors.startDate}
-                    </small>
-                  )}
-                </div>
-
-                <div className="col-12">
-                  <label className="form-label text-dark fw-medium mb-1 text-sm">
-                    {" "}
-                    تعداد مهمان
-                  </label>
-                  <input
-                    type="number"
-                    value={numGuests}
-                    onChange={(e) => setNumGuests(Number(e.target.value))}
-                    min="1"
-                    max="10"
-                    className="form-control  booking-input"
-                  />
-            
-                    {errors?.numGuests && (
-                    <small className="text-danger d-block mt-1 text-xs">
-                      <i className="fa-solid fa-circle-exclamation ms-1"></i>
-                      {errors.numGuests}
-                    </small>
-                  )}
-                </div>
-
-                <div
-                  className={`d-flex align-items-center justify-content-between border rounded-3 px-2 py-1 cursor-pointer  ${
-                    hasBreakfast
-                      ? "bg-light-warning border-warning"
-                      : "bg-light"
-                  }`}
-                  onClick={() => setHasBreakfast((prev) => !prev)}
-                >
-                  <div className="d-flex align-items-center">
-                    <div className="square--30 rounded bg-warning bg-opacity-10 text-warning d-flex align-items-center justify-content-center ms-2">
-                      {" "}
-                      <i className="fa-solid fa-mug-hot"></i>
-                    </div>
-
-                    <div className="fw-medium text-dark text-xs">صبحانه</div>
-
-                    <small className="text-muted text-xs">هر نفر / شب</small>
-                  </div>
-
-                  <div className="d-flex align-items-center gap-5">
-                    <span className="fw-bold text-success text-sm">
-                      {settings.breakfast_unit_price?.toLocaleString()} ریال
-                    </span>
-
-                    <input
-                      type="checkbox"
-                      checked={hasBreakfast}
-                      onChange={(e) => {
-                        e.stopPropagation();
-                        setHasBreakfast(e.target.checked);
-                      }}
-                      className="form-check-input"
-                    />
-                  </div>
-                </div>
-
-                {numNights > 0 && (
-                  <BookingSummery
-                    numNights={numNights}
-                    roomPrice={numNights * room.price}
-                    breakfastPrice={breakfastPrice}
-                    totalPrice={totalPrice}
-                  />
+                <DatePicker
+                  locale={persian_fa}
+                  calendar={persian}
+                  value={endDate}
+                  onChange={setEndDate}
+                  format="YYYY/MM/DD"
+                  inputClass="form-control"
+                  containerClassName="w-100"
+                  placeholder="انتخاب تاریخ پایان"
+                />
+                {errors?.startDate && (
+                  <small className="text-danger d-block mt-1 text-xs">
+                    <i className="fa-solid fa-circle-exclamation ms-1"></i>
+                    {errors.startDate}
+                  </small>
                 )}
+              </div>
 
-                {/* {error && <BookingError error={error} />} */}
+              <div className="col-12">
+                <label className="form-label text-dark fw-medium mb-1 text-sm">
+                  {" "}
+                  تعداد مهمان
+                </label>
+                <input
+                  type="number"
+                  value={numGuests}
+                  onChange={(e) => setNumGuests(Number(e.target.value))}
+                  min="1"
+                  max="10"
+                  className="form-control  booking-input"
+                />
 
-                <div className="col-12">
-                  <button
-                    type="submit"
-                    className="btn btn-primary full-width fw-medium"
-                  >
-                    رزرو هتل
-                  </button>
+                {errors?.numGuests && (
+                  <small className="text-danger d-block mt-1 text-xs">
+                    <i className="fa-solid fa-circle-exclamation ms-1"></i>
+                    {errors.numGuests}
+                  </small>
+                )}
+              </div>
+
+              <div
+                className={`d-flex align-items-center justify-content-between border rounded-3 px-2 py-1 cursor-pointer  ${
+                  hasBreakfast ? "bg-light-warning border-warning" : "bg-light"
+                }`}
+                onClick={() => setHasBreakfast((prev) => !prev)}
+              >
+                <div className="d-flex align-items-center">
+                  <div className="square--30 rounded bg-warning bg-opacity-10 text-warning d-flex align-items-center justify-content-center ms-2">
+                    {" "}
+                    <i className="fa-solid fa-mug-hot"></i>
+                  </div>
+
+                  <div className="fw-medium text-dark text-xs">صبحانه</div>
+
+                  <small className="text-muted text-xs">هر نفر / شب</small>
+                </div>
+
+                <div className="d-flex align-items-center gap-5">
+                  <span className="fw-bold text-success text-sm">
+                    {settings.breakfast_unit_price?.toLocaleString()} ریال
+                  </span>
+
+                  <input
+                    type="checkbox"
+                    checked={hasBreakfast}
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      setHasBreakfast(e.target.checked);
+                    }}
+                    className="form-check-input"
+                  />
                 </div>
               </div>
-            </form>
+
+              {numNights > 0 && (
+                <BookingSummery
+                  numNights={numNights}
+                  roomPrice={numNights * room.price}
+                  breakfastPrice={breakfastPrice}
+                  totalPrice={totalPrice}
+                />
+              )}
+
+              <div className="col-12">
+                <Link
+                  to={user ? "/prepare" : "/login"}
+                  state={{
+                    roomName: room.name,
+                    roomImage: room.cover_image,
+                    startDate: startDate.format("YYYY/MM/DD"),
+                    endDate: endDate.format("YYYY/MM/DD"),
+                    numGuests,
+                    numNights,
+                    hasBreakfast,
+                    breakfastPrice,
+                    roomPrice: numNights * room.price,
+                    totalPrice,
+                  }}
+                  className="btn btn-primary full-width fw-medium"
+                >
+                  {!user ? "ورود/ثبت‌نام" : "ورود به هتل"}
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>

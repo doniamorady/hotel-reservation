@@ -34,12 +34,7 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: "prepare",
-        element: <PrepareBooking />,
-      },
-
-      {
-        path: "prepare/:id",
+        path: "/prepare",
         element: <PrepareBooking />,
       },
 
@@ -63,7 +58,7 @@ export const router = createBrowserRouter([
   },
 
   {
-    path: "login",
+    path: "/login",
     element: <Login />,
   },
 ]);
