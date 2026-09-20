@@ -9,6 +9,7 @@ import Login from "../pages/auth/Login";
 import PrepareBooking from "../pages/PrepareBooking";
 import MyBooking from "../pages/MyBooking";
 import Profile from "../pages/Profile";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -30,12 +31,30 @@ export const router = createBrowserRouter([
             path: ":id",
             element: <DetailsRoom />,
           },
+        {
+          element: <ProtectedRoute/>,
+          children:[
+            {
+              path:':id/prepare',
+              element:<PrepareBooking/>
+            }
+          ]
+        }
         ],
       },
 
       {
-        path: "/prepare",
-        element: <PrepareBooking />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "bookings",
+            element: <MyBooking />,
+          },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+        ],
       },
 
       {
@@ -45,14 +64,6 @@ export const router = createBrowserRouter([
       {
         path: "about-us",
         element: <About />,
-      },
-      {
-        path: "bookings",
-        element: <MyBooking />,
-      },
-      {
-        path: "profile",
-        element: <Profile />,
       },
     ],
   },

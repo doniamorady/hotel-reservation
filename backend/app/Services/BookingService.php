@@ -27,12 +27,11 @@ class BookingService
                 'This room has a maximum capacity of ' . $room->capacity . ' guests.'
             );
         //without auth
-        // $data['user_id'] = auth()->user()->id;
-        $data['user_id'] = 1;
+        $data['user_id'] = auth()->id();
         $data['room_id'] = $room->id;
 
-        $data['start_date'] = Carbon::createFromTimestampMs($data['start_date'])->startOfDay();
-        $data['end_date'] = Carbon::createFromTimestampMs($data['end_date'])->startOfDay();
+        $data['start_date'] = Carbon::parse($data['start_date']);
+        $data['end_date'] = Carbon::parse($data['end_date']);
         $data['num_nights'] = $data['start_date']->diffInDays($data['end_date']);
 
         $prices = $this->priceService->calcPrice($data, $room);

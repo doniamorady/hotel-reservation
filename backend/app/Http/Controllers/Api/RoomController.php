@@ -9,6 +9,7 @@ use App\Http\Requests\CommentRequest;
 use App\Http\Resources\RoomResource;
 use App\Models\Room;
 use App\Models\Bed;
+use App\Services\RoomAvailabilityService;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -21,7 +22,7 @@ class RoomController extends Controller
         if ($request->filled('bedrooms'))
             $rooms->where('bedrooms', $request->bedrooms);
 
-        $rooms=$rooms->paginate(10);
+        $rooms = $rooms->paginate(10);
         return RoomResource::collection($rooms);
     }
 
@@ -43,7 +44,7 @@ class RoomController extends Controller
 
     public function show(Room $room)
     {
-        return new RoomResource($room->load(['beds', 'gallery']));
+        return new RoomResource($room->load(['beds', 'gallery', 'comments']));
     }
 
 
@@ -78,5 +79,15 @@ class RoomController extends Controller
         $data['room_id'] = $room->id;
         $comment = $room->comments()->create($data);
         return response()->json(['message' => 'Comment added successfully', 'comment' => $comment], 201);
+    }
+
+
+    public function availability(Request $request, Room $room, RoomAvailabilityService $service)
+    {
+        $validated = $request->validate([
+            'start_date' => ['required', 'date'], 
+            'end_date' => ['required', 'date'], 
+        ]);
+        return response()->json( $service->check($room,$validated['start_date'], $validated['end_date']));
     }
 }

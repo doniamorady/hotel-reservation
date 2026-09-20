@@ -13,11 +13,10 @@ class RoomAvailabilityService
 
         if (!$room->status) return throw new Exception('This room not active. Please chose another room');
 
-        return !$room->bookings()->where(function ($query) use ($start_date, $end_date) {
-            $query->whereBetween('start_date', [$start_date, $end_date])->orWhereBetween('end_date', [
-                $start_date,
-                $end_date
-            ]);
+        $activeStatuses  = ['pending', 'confirmed', 'check_in'];
+        
+        return !$room->bookings()->whereIn('status', $activeStatuses)->where(function ($query) use ($start_date, $end_date) {
+            $query->where('start_date', '<', $end_date)->where('end_date', '>', $start_date);
         })->exists();
     }
 }
