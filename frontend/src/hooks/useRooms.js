@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { getRooms } from "../services/apiRoom";
 
-export function useRooms(bedrooms, page) {
+export function useRooms(params={}) {
   return useQuery({
-    queryKey: ["rooms", bedrooms, page],
-    queryFn: () => getRooms({ bedrooms, page }),
+    queryKey: ["rooms",params],
+    queryFn: () => getRooms(params),
 
     placeholderData: (previousData) => previousData,
   });

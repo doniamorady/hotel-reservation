@@ -12,7 +12,7 @@ export function useRoomsFilters() {
   const bedrooms = bedroomsParams !== null ? Number(bedroomsParams) : null;
   let activeTab = sort || "all";
 
-  const { data, isLoading, isError } = useRooms(bedrooms, page);
+  const { data, isLoading, isError } = useRooms({bedrooms, page});
 
   const rooms = sortRoomByPrice(data?.data || [], sort);
   const pagination = data?.meta;
