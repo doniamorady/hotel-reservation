@@ -1,35 +1,17 @@
 import { useState } from "react";
 import HeadTag from "../../layouts/HeadTag";
-import { sendOtp } from "../../services/apiAuth";
 import OtpVerification from "./OtpVerification";
 import LoginHeader from "../../components/auth/LoginHeader";
+import LoadingButton from "../../components/LoadingButton";
+import { useLogin } from "../../hooks/useLogin";
 
 export default function Login() {
   const [phone, setPhone] = useState("");
-  const [error, setError] = useState("");
-  const [step, setStep] = useState(1);
+  const [login, error, setError, isSending, step, setStep] = useLogin(phone);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const phoneRegex = /^(0|\+98|98)9\d{9}$/;
-    if (!phone) {
-      setError("شماره تلفن الزامی میباشد");
-      return;
-    }
-    if (!phoneRegex.test(phone)) {
-      setError("فرمت شماره وارد شده صحیح نمیباشد");
-      return;
-    }
-
-    try {
-      const res = await sendOtp(phone);
-      setStep(2);
-      console.log(res);
-    } catch (error) {
-      setError(error.response?.data?.message || "خطا در ارسال کد تایید");
-    }
-
-    setError("");
+    login();
   }
 
   if (step === 2) return <OtpVerification phone={phone} setStep={setStep} />;
@@ -47,8 +29,7 @@ export default function Login() {
                   {/* Logo */}
 
                   <LoginHeader />
-                  
-                  
+
                   <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                       <label className="form-label text-dark fw-medium">
@@ -86,13 +67,11 @@ export default function Login() {
                       </div>
                     </div>
 
-                    <button
-                      type="submit"
-                      className="btn btn-primary w-100 rounded-3 py-3 fw-medium"
-                    >
-                      ارسال کد تایید
-                      <i className="fa-solid fa-arrow-left me-2"></i>
-                    </button>
+                    <LoadingButton
+                      isLoading={isSending}
+                      message1="در حال ارسال"
+                      message2="کد تایید"
+                    />
                   </form>
 
                   <div className="text-center mt-4">

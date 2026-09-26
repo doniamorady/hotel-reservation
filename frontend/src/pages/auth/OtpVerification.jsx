@@ -1,33 +1,17 @@
 import { useState } from "react";
 import HeadTag from "../../layouts/HeadTag";
-import { Link, useNavigate } from "react-router-dom";
-import { verifyOtp } from "../../services/apiAuth";
+import { Link } from "react-router-dom";
 import OtpVerificationHeader from "../../components/auth/OtpVerificationHeader";
+import LoadingButton from "../../components/LoadingButton";
+import { useOtpVerication } from "../../hooks/useOtpVerication";
 
 export default function OtpVerification({ phone, setStep }) {
   const [otp_code, setOtp] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
-
+  const [verification, error, isLoading] = useOtpVerication(otp_code, phone);
+   
   async function handleSubmit(e) {
     e.preventDefault();
-
-    if (!otp_code) {
-      setError("کد تاییدیه اجباری است");
-      return;
-    }
-
-    try {
-      const res = await verifyOtp(otp_code, phone);
-      localStorage.setItem("token", res.token);
-      navigate("/");
-    } catch (error) {
-      if (error.response?.status === 422) {
-        setError(error.response.data.message);
-      } else {
-        setError("مشکلی در سرور رخ داده است.");
-      }
-    }
+    verification();
   }
 
   return (
@@ -72,14 +56,11 @@ export default function OtpVerification({ phone, setStep }) {
                         </small>
                       )}
                     </div>
-
-                    <button
-                      type="submit"
-                      className="btn btn-primary w-100 rounded-3 py-3 fw-medium"
-                    >
-                      تایید و ورود
-                      <i className="fa-solid fa-arrow-left me-2"></i>
-                    </button>
+                    <LoadingButton
+                      isLoading={isLoading}
+                      message1="لطفا منتظر مانید ..."
+                      message2="تایید و ورود"
+                    />
                   </form>
 
                   <div className="text-center mt-4">
