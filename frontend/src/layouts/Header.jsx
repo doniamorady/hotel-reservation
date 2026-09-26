@@ -1,23 +1,9 @@
 import { Link } from "react-router-dom";
 import LinkComponent from "../components/Link";
-import { useEffect, useState } from "react";
-import { getMe } from "../services/apiAuth";
+import { useMe } from "../hooks/useMe";
 
 export default function Header() {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    async function getUser() {
-      try {
-        const res = await getMe();
-        setUser(res);
-      } catch (error) {
-        console.log(error);
-        setUser(null);
-      }
-    }
-    getUser();
-  }, []);
+  const { data: user } = useMe();
 
   return (
     <div className="header header-light">
