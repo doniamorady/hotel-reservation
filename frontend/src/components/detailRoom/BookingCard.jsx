@@ -1,24 +1,22 @@
 import persian_fa from "react-date-object/locales/persian_fa";
 import persianModule from "react-date-object/calendars/persian";
 import DateObject from "react-date-object";
-import { useEffect, useState } from "react";
-import { getSettings } from "../../services/apiSetting";
+import { useState } from "react";
 import BookingSummery from "./BookingSummery";
-import { getMe } from "../../services/apiAuth";
 import DateSection from "./DateSection";
 import GuestsSection from "./GuestsSection";
 import BreakfastSection from "./BreakfastSection";
 import { useRoomAvailability } from "../../hooks/useRoomAvailability";
 import BookingButton from "./BookingButton";
 import { calculateNights, calculateBookingPrice } from "../../utils/booking";
+import { useSettings } from "../../hooks/useSettings";
+import { useMe } from "../../hooks/useMe";
 
 const persian = persianModule.default;
 
 export default function BookingCard({ room }) {
   const [hasBreakfast, setHasBreakfast] = useState(false);
   const [numGuests, setNumGuests] = useState(1);
-  const [settings, setSettings] = useState({});
-  const [user, setUser] = useState(null);
 
   const today = new DateObject({ calendar: persian, locale: persian_fa });
   const tomorrow = new DateObject({
@@ -28,22 +26,8 @@ export default function BookingCard({ room }) {
 
   const [startDate, setStartDate] = useState(today);
   const [endDate, setEndDate] = useState(tomorrow);
-
-  //load Settings and me
-  useEffect(() => {
-    async function loadData() {
-      const settingsRes = await getSettings();
-      setSettings(settingsRes.data);
-
-      try {
-        const userRes = await getMe();
-        setUser(userRes);
-      } catch {
-        setUser(null);
-      }
-    }
-    loadData();
-  }, []);
+  const { data: settings } = useSettings();
+  const { data: user } = useMe();
 
   //check room availability
   const errors = useRoomAvailability(startDate, endDate, room);
@@ -51,7 +35,7 @@ export default function BookingCard({ room }) {
 
   const { breakfastPrice, totalPrice } = calculateBookingPrice(
     hasBreakfast,
-    settings.breakfast_unit_price,
+    settings?.breakfast_unit_price,
     numGuests,
     numNights,
     room.price,
@@ -67,7 +51,7 @@ export default function BookingCard({ room }) {
     num_guests: numGuests,
     num_nights: numNights,
     has_breakfast: hasBreakfast,
-    breakfast_unit_price: settings.breakfast_unit_price,
+    breakfast_unit_price: settings?.breakfast_unit_price,
     total_breakfast_price: breakfastPrice,
     room_unit_price: room.price,
     total_room_price: numNights * room.price,
@@ -126,7 +110,7 @@ export default function BookingCard({ room }) {
               {/* Breakfast */}
               <BreakfastSection
                 hasBreakfast={hasBreakfast}
-                breakfast_unit_price={settings.breakfast_unit_price}
+                breakfast_unit_price={settings?.breakfast_unit_price}
                 setHasBreakfast={setHasBreakfast}
               />
 

@@ -1,29 +1,19 @@
-import { useEffect, useState } from "react";
-import { getRoom, getRooms } from "../services/apiRoom";
+import { useEffect } from "react";
 import ServiceAmenityContainer from "../components/detailRoom/ServiceAmenityContainer";
 import Detail from "../components/detailRoom/Detail";
 import LoginBanner from "../components/detailRoom/LoginBanner";
 import RoomBreadcrumb from "../components/RoomBreadcrumb";
 import { useParams } from "react-router-dom";
 import RoomsContainer from "../components/homePage/RoomsContainer";
+import { useRoom } from "../hooks/useRoom";
+import { useRooms } from "../hooks/useRooms";
+import Loader from "../components/Loader";
 
 export default function DetailsRoom() {
-  const [room, setRoom] = useState(null);
   const { id } = useParams();
-  const [rooms, setRooms] = useState([]);
-
-  useEffect(() => {
-    async function loadRooms() {
-      try {
-        const data = await getRooms();
-        setRooms(data.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    loadRooms();
-  }, []);
+  const { data: room, isLoading: roomLoading, isError } = useRoom(id);
+  const { data: roomsData, isLoading: roomsLoading } = useRooms();
+  const rooms = roomsData?.data || [];
 
   useEffect(() => {
     window.scrollTo({
@@ -31,16 +21,10 @@ export default function DetailsRoom() {
       behavior: "smooth",
     });
   }, [id]);
-
-  useEffect(() => {
-    async function loadRoom() {
-      const data = await getRoom(id);
-      setRoom(data);
-    }
-    loadRoom();
-  }, [id]);
-
-  if (!room) return <p>loading...</p>;
+  
+  
+  if (roomLoading) return <Loader />;
+  if (isError) return <div>خطا در دریافت اطلاعات</div>;
 
   const items = [
     {
@@ -67,13 +51,11 @@ export default function DetailsRoom() {
 
             {/* <!-- Service & Amenties --> */}
             <ServiceAmenityContainer />
-
             {/* <!-- Guests Reviews --> */}
           </div>
         </div>
       </section>
-
-      <RoomsContainer rooms={rooms} />
+      {roomsLoading ? <Loader /> : <RoomsContainer rooms={rooms} />}
     </>
   );
 }
