@@ -10,21 +10,5 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <script src="/assets/js/flatpickr.js"></script>
-
-    <script src="/assets/js/jdate.min.js"></script>
-    <script src="/assets/js/fa.js"></script>
-    <script>
-      window.Date = window.JDate;
-      flatpickr("#checkinout", {
-        locale: "fa",
-        mode: "range",
-        minDate: "today",
-        format: "YYYY/MM/DD",
-      });
-      flatpickr(".choosedate", {
-        locale: "fa",
-      });
-    </script>
   </body>
 </html>
