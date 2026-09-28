@@ -44,7 +44,9 @@ class RoomController extends Controller
 
     public function show(Room $room)
     {
-        return new RoomResource($room->load(['beds', 'gallery', 'comments']));
+        return new RoomResource($room->load(['beds', 'gallery', 'comments'=>function($query){
+            $query->where('status', 1)->latest();
+        }]));
     }
 
 
@@ -77,6 +79,7 @@ class RoomController extends Controller
         $data = $request->validated();
         $data['user_id'] = auth()->id();
         $data['room_id'] = $room->id;
+        $data['s'] = $room->id;
         $comment = $room->comments()->create($data);
         return response()->json(['message' => 'Comment added successfully', 'comment' => $comment], 201);
     }
