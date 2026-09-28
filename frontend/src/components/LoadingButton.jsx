@@ -1,9 +1,10 @@
-export default function LoadingButton({ isLoading, message1, message2 }) {
+export default function LoadingButton({ isLoading, message1, message2, onClick=null }) {
   return (
     <button
       type="submit"
       className="btn btn-primary w-100 rounded-3 py-3 fw-medium"
       disabled={isLoading}
+      onClick={onClick}
     >
       {isLoading ? (
         <>
