@@ -19,8 +19,8 @@ class BookingResource extends JsonResource
         return [
             'id' => $this->id,
             'status' => $this->status,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
+            'start_date' => $this->start_date->format('Y-m-d'),
+            'end_date' => $this->end_date->format('Y-m-d'),
             'user' => new UserResource($this->user),
             'room' => new RoomResource($this->room),
             'num_nights' => $this->num_nights,
