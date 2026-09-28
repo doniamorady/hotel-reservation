@@ -15,7 +15,15 @@ export function ConvertDate(date) {
 
   return convertPersianNumbersToEnglish(result);
 }
-
-function convertPersianNumbersToEnglish(str) {
+export function ConvertToPersianDate(date) {
+  return new DateObject({
+    date,
+    format: "YYYY-MM-DD",
+    calendar: gregorian,
+  })
+    .convert(persian, persian_fa)
+    .format("YYYY/MM/DD");
+}
+export function convertPersianNumbersToEnglish(str) {
   return str.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
 }

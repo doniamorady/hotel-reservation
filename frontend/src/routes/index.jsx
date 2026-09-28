@@ -10,6 +10,7 @@ import PrepareBooking from "../pages/PrepareBooking";
 import MyBooking from "../pages/MyBooking";
 import Profile from "../pages/Profile";
 import ProtectedRoute from "./ProtectedRoute";
+import BookingSuccess from "../pages/BookingSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -31,15 +32,15 @@ export const router = createBrowserRouter([
             path: ":id",
             element: <DetailsRoom />,
           },
-        {
-          element: <ProtectedRoute/>,
-          children:[
-            {
-              path:':id/prepare',
-              element:<PrepareBooking/>
-            }
-          ]
-        }
+          {
+            element: <ProtectedRoute />,
+            children: [
+              {
+                path: ":id/prepare",
+                element: <PrepareBooking />,
+              },
+            ],
+          },
         ],
       },
 
@@ -49,6 +50,10 @@ export const router = createBrowserRouter([
           {
             path: "bookings",
             element: <MyBooking />,
+          },
+          {
+            path: "booking-success",
+            element: <BookingSuccess />,
           },
           {
             path: "profile",
