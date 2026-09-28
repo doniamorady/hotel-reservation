@@ -29,10 +29,8 @@ export default function BookingCard({ room }) {
   const { data: settingsData } = useSettings();
   const settings = settingsData?.data;
   const { data: userData } = useMe();
-  const user = userData.user;
-  
-  
-  
+  const user = userData?.user ?? null;
+
   //check room availability
   const errors = useRoomAvailability(startDate, endDate, room);
   const numNights = calculateNights(startDate, endDate);

@@ -8,7 +8,7 @@ import RoomsContainer from "../components/homePage/RoomsContainer";
 import { useRoom } from "../hooks/useRoom";
 import { useRooms } from "../hooks/useRooms";
 import Loader from "../components/Loader";
-
+import CommentsContainer from "../components/detailRoom/comment/CommentsContainer";
 export default function DetailsRoom() {
   const { id } = useParams();
   const { data: room, isLoading: roomLoading, isError } = useRoom(id);
@@ -21,8 +21,7 @@ export default function DetailsRoom() {
       behavior: "smooth",
     });
   }, [id]);
-  
-  
+
   if (roomLoading) return <Loader />;
   if (isError) return <div>خطا در دریافت اطلاعات</div>;
 
@@ -52,6 +51,8 @@ export default function DetailsRoom() {
             {/* <!-- Service & Amenties --> */}
             <ServiceAmenityContainer />
             {/* <!-- Guests Reviews --> */}
+
+            <CommentsContainer comments={room.comments} roomId={room.id} />
           </div>
         </div>
       </section>
