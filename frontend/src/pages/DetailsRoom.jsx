@@ -9,10 +9,13 @@ import { useRoom } from "../hooks/useRoom";
 import { useRooms } from "../hooks/useRooms";
 import Loader from "../components/Loader";
 import CommentsContainer from "../components/detailRoom/comment/CommentsContainer";
+import { useMe } from "../hooks/useMe";
 export default function DetailsRoom() {
   const { id } = useParams();
   const { data: room, isLoading: roomLoading, isError } = useRoom(id);
   const { data: roomsData, isLoading: roomsLoading } = useRooms();
+  const { data: userData } = useMe();
+  const user = userData?.user;
   const rooms = roomsData?.data || [];
 
   useEffect(() => {
@@ -46,7 +49,7 @@ export default function DetailsRoom() {
           <div className="row">
             <RoomBreadcrumb items={items} />
             <Detail room={room} />
-            <LoginBanner />
+            {!user && <LoginBanner />}
 
             {/* <!-- Service & Amenties --> */}
             <ServiceAmenityContainer />

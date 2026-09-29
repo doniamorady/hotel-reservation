@@ -23,7 +23,7 @@ export default function RoomsContainer({ rooms }) {
           <div className="col-4">
             <div className="text-start grpx-btn">
               <Link
-                to="rooms"
+                to="/rooms"
                 className="btn btn-light-primary btn-md fw-medium p-3"
               >
                 بیشتر

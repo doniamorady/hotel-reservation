@@ -77,67 +77,6 @@ export default function ServiceAmenityContainer() {
                     </li>
                   </ul>
                 </div>
-
-                <div className="col-xl-12 col-lg-12 col-md-12">
-                  <ul className="row align-items-center g-3 p-0 mb-0">
-                    <li className="col-xl-3 col-lg-3 col-md-6 col-6">
-                      <div className="d-flex flex-column align-items-center rounded border br-dashed p-2">
-                        <div className="room-alsyruk mb-2">
-                          <img
-                            src="assets/img/hotel/hotel-5.jpg"
-                            className="img-fluid rounded"
-                            alt=""
-                          />
-                        </div>
-                        <div className="tedfr-caps text-center ">
-                          <span className="text-muted-2">اتاق جلسات</span>
-                        </div>
-                      </div>
-                    </li>
-                    <li className="col-xl-3 col-lg-3 col-md-6 col-6">
-                      <div className="d-flex flex-column align-items-center rounded border br-dashed p-2">
-                        <div className="room-alsyruk mb-2">
-                          <img
-                            src="assets/img/hotel/hotel-5.jpg"
-                            className="img-fluid rounded"
-                            alt=""
-                          />
-                        </div>
-                        <div className="tedfr-caps text-center ">
-                          <span className="text-muted-2">رستوران</span>
-                        </div>
-                      </div>
-                    </li>
-                    <li className="col-xl-3 col-lg-3 col-md-6 col-6">
-                      <div className="d-flex flex-column align-items-center rounded border br-dashed p-2">
-                        <div className="room-alsyruk mb-2">
-                          <img
-                            src="assets/img/hotel/hotel-5.jpg"
-                            className="img-fluid rounded"
-                            alt=""
-                          />
-                        </div>
-                        <div className="tedfr-caps text-center ">
-                          <span className="text-muted-2">زمین بازی </span>
-                        </div>
-                      </div>
-                    </li>
-                    <li className="col-xl-3 col-lg-3 col-md-6 col-6">
-                      <div className="d-flex flex-column align-items-center rounded border br-dashed p-2">
-                        <div className="room-alsyruk mb-2">
-                          <img
-                            src="assets/img/hotel/hotel-5.jpg"
-                            className="img-fluid rounded"
-                            alt=""
-                          />
-                        </div>
-                        <div className="tedfr-caps text-center ">
-                          <span className="text-muted-2">سالن رقص</span>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
               </div>
             </div>
           </div>

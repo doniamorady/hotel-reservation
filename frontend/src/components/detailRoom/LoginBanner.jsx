@@ -10,9 +10,9 @@ export default function LoginBanner() {
             ورود
           </Link>
           یا{" "}
-          <a href="#" className="text-white text-decoration-underline">
+          <Link to="/login" className="text-white text-decoration-underline">
             ثبت نام{" "}
-          </a>
+          </Link>
           برای دريافت 118 امتیاز در باشگاه مشتریان
         </p>
       </div>
