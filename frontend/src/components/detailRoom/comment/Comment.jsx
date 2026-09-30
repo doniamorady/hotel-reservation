@@ -1,4 +1,4 @@
-import { ConvertToPersianDate } from "../../../utils/ConvertDate";
+import { toPersian } from "../../../utils/date";
 
 export default function Comment({ comment }) {
   return (
@@ -57,7 +57,7 @@ export default function Comment({ comment }) {
             >
               <i className="fa-regular fa-calendar ms-1"></i>
 
-              {ConvertToPersianDate(comment.created_at)}
+              {toPersian(comment.created_at)}
             </span>
           </div>
 

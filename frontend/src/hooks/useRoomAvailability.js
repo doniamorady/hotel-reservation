@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import { availabilityRoom } from "../services/apiBooking";
-import { ConvertDate } from "../utils/ConvertDate";
-
+import { toGregorian } from "../utils/date";
 export function useRoomAvailability(startDate, endDate, room, numGuests) {
   const [errors, setErrors] = useState({});
   useEffect(() => {
     async function checkAvailability() {
-      const start_date = ConvertDate(startDate.format("YYYY/MM/DD"));
-      const end_date = ConvertDate(endDate.format("YYYY/MM/DD"));
+      const start_date = toGregorian(startDate);
+      const end_date = toGregorian(endDate);
       const available = await availabilityRoom(room.id, {
         start_date,
         end_date,
       });
-      
 
       const newErrors = {};
       if (!available)
@@ -32,6 +30,6 @@ export function useRoomAvailability(startDate, endDate, room, numGuests) {
 
     checkAvailability();
   }, [startDate, endDate, numGuests, room.capacity, room.id]);
-  
+
   return errors;
 }

@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import { toPersian } from "../utils/date";
 
 export default function BookingSuccess() {
   const { state } = useLocation();
@@ -100,9 +101,15 @@ export default function BookingSuccess() {
 
                   <InfoItem title="اتاق رزرو شده" value={data.room.name} />
 
-                  <InfoItem title="تاریخ ورود" value={(data.start_date)} />
+                  <InfoItem
+                    title="تاریخ ورود"
+                    value={toPersian(data.start_date)}
+                  />
 
-                  <InfoItem title="تاریخ خروج" value={(data.end_date)} />
+                  <InfoItem
+                    title="تاریخ خروج"
+                    value={toPersian(data.end_date)}
+                  />
 
                   <InfoItem title="مدت اقامت" value={`${data.num_nights} شب`} />
 

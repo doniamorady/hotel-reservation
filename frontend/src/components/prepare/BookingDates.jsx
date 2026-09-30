@@ -1,3 +1,5 @@
+import { toPersian } from "../../utils/date";
+
 export default function BookingDates({ bookingData }) {
   return (
     <div className="row g-2 mb-4">
@@ -5,12 +7,12 @@ export default function BookingDates({ bookingData }) {
         {
           icon: "fa-regular fa-calendar",
           title: "ورود",
-          value: bookingData.start_date,
+          value: toPersian(bookingData.start_date),
         },
         {
           icon: "fa-regular fa-calendar-check",
           title: "خروج",
-          value: bookingData.end_date,
+          value: toPersian(bookingData.end_date),
         },
         {
           icon: "fa-regular fa-moon",

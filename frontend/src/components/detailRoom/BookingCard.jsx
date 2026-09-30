@@ -1,5 +1,5 @@
 import persian_fa from "react-date-object/locales/persian_fa";
-import persianModule from "react-date-object/calendars/persian";
+import persian from "react-date-object/calendars/persian";
 import DateObject from "react-date-object";
 import { useState } from "react";
 import BookingSummery from "./BookingSummery";
@@ -11,8 +11,7 @@ import BookingButton from "./BookingButton";
 import { calculateNights, calculateBookingPrice } from "../../utils/booking";
 import { useSettings } from "../../hooks/useSettings";
 import { useMe } from "../../hooks/useMe";
-
-const persian = persianModule.default;
+import { toGregorian } from "../../utils/date";
 
 export default function BookingCard({ room }) {
   const [hasBreakfast, setHasBreakfast] = useState(false);
@@ -42,14 +41,13 @@ export default function BookingCard({ room }) {
     numNights,
     room.price,
   );
-
   const bookingData = {
     roomName: room.name,
     room_id: room.id,
     user_id: user?.id,
     roomImage: room.cover_image,
-    start_date: startDate.format("YYYY/MM/DD"),
-    end_date: endDate.format("YYYY/MM/DD"),
+    start_date: toGregorian(startDate),
+    end_date: toGregorian(endDate),
     num_guests: numGuests,
     num_nights: numNights,
     has_breakfast: hasBreakfast,
@@ -59,7 +57,6 @@ export default function BookingCard({ room }) {
     total_room_price: numNights * room.price,
     totalPrice,
   };
-
   return (
     <div className="col-xl-4 col-lg-5 col-md-12">
       <div className="card border br-dashed">
