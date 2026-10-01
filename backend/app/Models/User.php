@@ -60,4 +60,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+    
+    public function favoriteRooms(){
+        return $this->belongsToMany(Room::class, 'favorites');
+    }
 }

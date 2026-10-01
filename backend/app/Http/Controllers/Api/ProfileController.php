@@ -23,4 +23,6 @@ class ProfileController extends Controller
         $user->update($data);
         return response()->json(new UserResource($user));
     }
+    
+
 }
