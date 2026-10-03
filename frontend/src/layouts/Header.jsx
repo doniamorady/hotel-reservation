@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
 import LinkComponent from "../components/Link";
 import { useMe } from "../hooks/useMe";
+import { useState } from "react";
 
 export default function Header() {
   const { data: user } = useMe();
+  const [showMenu, setShowMenu] = useState(false);
 
+  const closeMenu = () => {
+    setShowMenu(false);
+  };
   return (
     <div className="header header-light">
       <div className="container">
@@ -41,9 +46,10 @@ export default function Header() {
                       type="button"
                       className="btn p-0 border-0"
                       data-bs-toggle="dropdown"
+                      onClick={() => setShowMenu((show) => !show)}
                     >
                       <img
-                        src={user?.avatar || "  /no-photo.png"}
+                        src={user?.avatar || "/no-photo.png"}
                         alt="avatar"
                         style={{
                           width: "42px",
@@ -54,35 +60,55 @@ export default function Header() {
                         }}
                       />
                     </button>
+                    {showMenu && (
+                      <div
+                        className="dropdown-menu pull-right animated flipInX show"
+                        style={{
+                          display: "block",
+                          zIndex: 9999,
+                        }}
+                      >
+                        <div className="drp_menu_headr">
+                          <h4>
+                            {user.first_name} {user.last_name}
+                          </h4>
+                        </div>
 
-                    <div className="dropdown-menu pull-right animated flipInX">
-                      <div className="drp_menu_headr">
-                        <h4>
-                          {user.first_name} {user.last_name}
-                        </h4>
+                        <ul>
+                          <LinkComponent
+                            onClick={closeMenu}
+                            to="/profile"
+                            label="پروفایل"
+                          >
+                            <i className="fa-regular fa-id-card ms-2" />
+                          </LinkComponent>
+
+                          <LinkComponent
+                            onClick={closeMenu}
+                            to="/bookings"
+                            label="لیست رزرو ها"
+                          >
+                            <i className="fa-regular fa-id-card ms-2" />
+                          </LinkComponent>
+
+                          <LinkComponent
+                            to="/favorites"
+                            label="لیست علاقه مندی ها"
+                            onClick={closeMenu}
+                          >
+                            <i className="fa-regular fa-id-card ms-2" />
+                          </LinkComponent>
+
+                          <LinkComponent
+                            onClick={closeMenu}
+                            to="/logout"
+                            label="خروج"
+                          >
+                            <i className="fa-solid fa-power-off ms-2" />
+                          </LinkComponent>
+                        </ul>
                       </div>
-
-                      <ul>
-                        <LinkComponent to="/profile" label="پروفایل">
-                          <i className="fa-regular fa-id-card ms-2" />
-                        </LinkComponent>
-
-                        <LinkComponent to="/bookings" label="لیست رزرو ها">
-                          <i className="fa-regular fa-id-card ms-2" />
-                        </LinkComponent>
-
-                        <LinkComponent
-                          to="/favorites"
-                          label="لیست علاقه مندی ها"
-                        >
-                          <i className="fa-regular fa-id-card ms-2" />
-                        </LinkComponent>
-
-                        <LinkComponent to="/logout" label="خروج">
-                          <i className="fa-solid fa-power-off ms-2" />
-                        </LinkComponent>
-                      </ul>
-                    </div>
+                    )}
                   </div>
                 </li>
               </ul>

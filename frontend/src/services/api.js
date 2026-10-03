@@ -19,19 +19,12 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-
+  (response) => response,
   (error) => {
-    const status = error.response?.status;
-    const url = error.config?.url;
-
-    if (status === 401 && !url.includes("/auth/")) {
+    if (error.response?.status == 401) {
       localStorage.removeItem("token");
-      // window.location.href = "/login";
+      window.location.href = "/login";
     }
-
     return Promise.reject(error);
   },
 );

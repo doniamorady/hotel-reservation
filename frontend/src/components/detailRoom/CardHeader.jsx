@@ -1,4 +1,20 @@
-export default function CardHeader({name}) {
+import {
+  useAddFavorite,
+  useDeleteFavorite,
+  useIsFavorite,
+} from "../../hooks/useFavorite";
+
+export default function CardHeader({ name, id }) {
+  const { data } = useIsFavorite(id);
+  const isFavorite = data?.isFavorite;
+  const { mutate: addFavorite } = useAddFavorite(id);
+  const { mutate: deleteFavorite } = useDeleteFavorite(id);
+
+  function handleFavorite() {
+    if (isFavorite) deleteFavorite(id);
+    else addFavorite(id);
+  }
+
   return (
     <div className="crd-heaader d-md-flex align-items-center justify-content-between mb-3">
       <div className="crd-heaader-first">
@@ -24,13 +40,13 @@ export default function CardHeader({name}) {
       <div className="crd-heaader-last my-md-0 my-2">
         <div className="drix-wrap d-flex flex-column align-items-md-end align-items-start text-end">
           <div className="drix-first d-flex align-items-center text-end mb-2">
-            <a
-              href="#"
-              className="bg-light-info text-info rounded-1 fw-medium text-sm px-3 py-2 lh-base"
+            <button
+              onClick={handleFavorite}
+              className={`bg-light-${isFavorite ? "danger" : "info"} border-0 text-${isFavorite ? "danger" : "info"} rounded-1 fw-medium text-sm px-3 py-2 lh-base`}
             >
               <i className="fa-solid fa-bookmark ms-2"></i>
-              افزودن به علاقه مندی
-            </a>
+              {isFavorite ? "حذف از علاقه‌مندی" : "افزودن به علاقه‌مندی"}
+            </button>
 
             <a
               href="#"
