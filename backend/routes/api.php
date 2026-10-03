@@ -23,7 +23,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
     
-    Route::get('/favorite', [FavoriteController::class, 'showFavorite']);
+    Route::get('/favorites', [FavoriteController::class, 'showFavorites']);
+    Route::get('/is-favorite/{room}', [FavoriteController::class, 'isFavorite']);
+    Route::post('/favorite/{room}', [FavoriteController::class, 'addToFavorite']);
+    Route::delete('/favorite/{room}', [FavoriteController::class, 'removeFavorite']);
 
     Route::prefix('profile')->group(function () {
         Route::get('/', [ProfileController::class, 'showProfile']);

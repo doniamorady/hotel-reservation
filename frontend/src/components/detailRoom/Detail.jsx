@@ -6,7 +6,7 @@ export default function Detail({ room }) {
   return (
     <div className="col-xl-12 col-lg-12 col-md-12">
       <div className="card border-0 p-3 mb-4">
-        <CardHeader name={room.name} />
+        <CardHeader name={room.name} id={room.id}/>
 
         <div className="crd-body">
           <div className="row align-items-center justify-content-between">
