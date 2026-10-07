@@ -1,4 +1,8 @@
-import { createBooking as createBookingApi } from "../services/apiBooking";
+import { useQuery } from "@tanstack/react-query";
+import {
+  createBooking as createBookingApi,
+  myBookings,
+} from "../services/apiBooking";
 
 export function useBooking(bookingData) {
   async function createBooking() {
@@ -10,10 +14,7 @@ export function useBooking(bookingData) {
     };
 
     try {
-      const res = await createBookingApi(
-        bookingData.room_id,
-        bookingPayload
-      );
+      const res = await createBookingApi(bookingData.room_id, bookingPayload);
 
       return res;
     } catch (error) {
@@ -22,4 +23,11 @@ export function useBooking(bookingData) {
   }
 
   return [createBooking];
+}
+
+export function useGetMyBooking() {
+  return useQuery({
+    queryKey: ["myBookings"],
+    queryFn: myBookings,
+  });
 }
