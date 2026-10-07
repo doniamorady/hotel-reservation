@@ -1,51 +1,38 @@
-export default function FavoriteRoomHeader({length}) {
+export default function FavoriteRoomHeader({ length }) {
   return (
     <div className="mb-4">
-      <div
-        className="
-                  d-flex
-                  justify-content-between
-                  align-items-center
-                "
-      >
+      <div className="d-flex justify-content-between align-items-center">
         <div>
           <h5
-            className="text-dark mb-1"
+            className="mb-1"
             style={{
-              fontWeight: "500",
+              fontSize: "16px",
+              fontWeight: 600,
+              color: "#172033",
             }}
           >
             علاقه‌مندی‌های من
           </h5>
-        </div>
 
-        <div
-          className="
-                    rounded-3
-                    px-3
-                    py-2
-                    bg-white
-                    shadow-sm
-                  "
-        >
-          <span
-            className="text-muted"
+          <p
+            className="text-muted mb-0"
             style={{
               fontSize: "12px",
             }}
           >
-            تعداد ذخیره شده:
-          </span>
+            اتاق‌های ذخیره شده برای رزرو سریع‌تر
+          </p>
+        </div>
 
-          <span
-            className="text-primary me-2"
-            style={{
-              fontSize: "13px",
-              fontWeight: "500",
-            }}
-          >
-            {length} اتاق
-          </span>
+        <div
+          className="rounded-pill px-3 py-2"
+          style={{
+            background: "#edf5ff",
+            color: "#1d6fdc",
+            fontSize: "12px",
+          }}
+        >
+          {length} اتاق
         </div>
       </div>
     </div>
