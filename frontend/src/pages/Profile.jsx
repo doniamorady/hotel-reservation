@@ -8,7 +8,7 @@ export default function Profile() {
         <div className="row align-items-start justify-content-between gx-xl-4 pt-4">
           <SideBar />
 
-          <div className="col-xl-8 col-lg-8 col-md-12">
+          <div className="col-xl-9 col-lg-9 col-md-12">
             {/* <!-- Personal Information --> */}
             <div className="card mb-4">
               <div className="card-header">
@@ -27,4 +27,5 @@ export default function Profile() {
       </div>
     </section>
   );
+  
 }
