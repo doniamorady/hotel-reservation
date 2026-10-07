@@ -200,21 +200,6 @@ Authorization: Bearer {token}
 
 ---
 
----
-
-# 🔮 امکانات آینده
-
-- 💳 اتصال درگاه پرداخت آنلاین
-- 📊 داشبورد مدیریت حرفه‌ای
-- 📩 ارسال پیامک و ایمیل رزرو
-- ⭐ سیستم امتیازدهی و ثبت نظر کاربران
-- 🤖 چت‌بات هوشمند برای راهنمایی کاربران
-- 🐳 Docker و Containerization
-- 🚀 بهینه‌سازی Performance و Cache
-
----
-
-# 👩‍💻 توسعه‌دهنده
 
 **Donya Moradi**
 
@@ -223,13 +208,8 @@ Backend-focused Web Developer
 مهارت‌ها:
 
 - PHP / Laravel
-- React
+- JS/ React
 - REST API
 - MySQL
 - Git
 
----
-
-# 📄 License
-
-این پروژه با هدف یادگیری، توسعه مهارت‌های Full-stack و استفاده در رزومه شخصی ایجاد شده است.
