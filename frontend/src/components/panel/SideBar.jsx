@@ -1,8 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { useMe } from "../../hooks/useMe";
+import LogoutModal from "../LogoutModal";
+import { useState } from "react";
 
 export default function SideBar() {
   const { data } = useMe();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const user = data?.user;
 
   const location = useLocation();
@@ -26,7 +29,7 @@ export default function SideBar() {
   ];
 
   return (
-    <div className="col-xl-3 col-lg-4">
+    <div className={`col-xl-3 col-lg-4 z-1 ${showLogoutModal ? 'opacity-25' : ''}`}>
       <div
         className="bg-white rounded-4"
         style={{
@@ -148,9 +151,9 @@ export default function SideBar() {
               borderTop: "1px solid #eef1f5",
             }}
           >
-            <Link
-              to="/logout"
-              className="d-flex align-items-center text-decoration-none rounded-3"
+            <button
+              onClick={() => setShowLogoutModal(true)}
+              className="d-flex border-0 align-items-center text-decoration-none rounded-3"
               style={{
                 padding: "8px 10px",
                 color: "#dc3545",
@@ -173,7 +176,10 @@ export default function SideBar() {
                 />
               </span>
               خروج از حساب
-            </Link>
+            </button>
+            {showLogoutModal && (
+              <LogoutModal onClose={() => setShowLogoutModal(false)} />
+            )}
           </div>
         </div>
       </div>
