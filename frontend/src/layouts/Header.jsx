@@ -1,131 +1,142 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import LinkComponent from "../components/Link";
 import { useMe } from "../hooks/useMe";
-import { useState } from "react";
+import LogoutModal from "../components/LogoutModal";
+import "../assets/header.css";
 
 export default function Header() {
   const { data: user } = useMe();
+
   const [showMenu, setShowMenu] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-  const closeMenu = () => {
-    setShowMenu(false);
-  };
+  const closeMenu = () => setShowMenu(false);
+
   return (
-    <div className="header header-light">
-      <div className="container">
-        <nav id="navigation" className="navigation navigation-landscape">
-          <div className="nav-header">
-            <Link className="nav-brand" to="/">
-              <img src="/assets/img/logo.png" className="logo" alt="" />
+    <>
+      <header className="hotel-header">
+        <div className="container">
+          <nav className="hotel-navbar">
+            {/* Logo */}
+
+            <Link to="/" className="hotel-logo">
+              <img src="/assets/img/logo.png" alt="logo" />
             </Link>
-          </div>
 
-          <div
-            className="nav-menus-wrapper"
-            style={{ transitionProperty: "none" }}
-          >
-            <ul className="nav-menu">
-              <LinkComponent to="/rooms" label="اتاق ها">
-                <span className="submenu-indicator" />
-              </LinkComponent>
+            {/* Menu */}
+            <ul className="hotel-menu">
+              <LinkComponent to="/rooms" label="اتاق ها" />
 
-              <LinkComponent to="/about-us" label="درباره ما">
-                <span className="submenu-indicator" />
-              </LinkComponent>
+              <LinkComponent to="/about-us" label="درباره ما" />
 
-              <LinkComponent to="/contact-us" label="تماس با ما">
-                <span className="submenu-indicator" />
-              </LinkComponent>
+              <LinkComponent to="/contact-us" label="تماس با ما" />
             </ul>
 
-            {user ? (
-              <ul className="nav-menu nav-menu-social align-to-left">
-                <li>
-                  <div className="btn-group account-drop">
-                    <button
-                      type="button"
-                      className="btn p-0 border-0"
-                      data-bs-toggle="dropdown"
-                      onClick={() => setShowMenu((show) => !show)}
-                    >
-                      <img
-                        src={user?.avatar || "/no-photo.png"}
-                        alt="avatar"
-                        style={{
-                          width: "42px",
-                          height: "42px",
-                          borderRadius: "50%",
-                          objectFit: "cover",
-                          cursor: "pointer",
-                        }}
-                      />
-                    </button>
-                    {showMenu && (
-                      <div
-                        className="dropdown-menu pull-right animated flipInX show"
-                        style={{
-                          display: "block",
-                          zIndex: 9999,
-                        }}
-                      >
-                        <div className="drp_menu_headr">
-                          <h4>
-                            {user.first_name} {user.last_name}
-                          </h4>
-                        </div>
+            {/* Right */}
 
-                        <ul>
-                          <LinkComponent
-                            onClick={closeMenu}
-                            to="/profile"
-                            label="پروفایل"
-                          >
-                            <i className="fa-regular fa-id-card ms-2" />
-                          </LinkComponent>
-
-                          <LinkComponent
-                            onClick={closeMenu}
-                            to="/bookings"
-                            label="لیست رزرو ها"
-                          >
-                            <i className="fa-regular fa-id-card ms-2" />
-                          </LinkComponent>
-
-                          <LinkComponent
-                            to="/favorites"
-                            label="لیست علاقه مندی ها"
-                            onClick={closeMenu}
-                          >
-                            <i className="fa-regular fa-id-card ms-2" />
-                          </LinkComponent>
-
-                          <LinkComponent
-                            onClick={closeMenu}
-                            to="/logout"
-                            label="خروج"
-                          >
-                            <i className="fa-solid fa-power-off ms-2" />
-                          </LinkComponent>
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </li>
-              </ul>
+            {!user ? (
+              <Link to="/login" className="login-btn">
+                <i className="fa-regular fa-user" />
+                ورود | ثبت‌نام
+              </Link>
             ) : (
-              <ul className="nav-menu nav-menu-social align-to-left">
-                <div className="btn-group account-drop">
-                  <LinkComponent
-                    to="/login"
-                    className="btn btn-sm btn-primary text-white"
-                    label="ورود | ثبت‌نام"
-                  ></LinkComponent>
+              <div className="user-box">
+                <button
+                  className="user-trigger"
+                  onClick={() => setShowMenu((s) => !s)}
+                >
+                  <img
+                    src={user.avatar || "/no-photo.png"}
+                    className="user-avatar"
+                    alt=""
+                  />
+
+                  <div className="user-info">
+                    <span className="user-fullname">
+                      {user.first_name} {user.last_name}
+                    </span>
+
+                    <small>حساب کاربری</small>
+                  </div>
+
+                  <i
+                    className={`fa-solid fa-chevron-down dropdown-icon ${
+                      showMenu ? "rotate" : ""
+                    }`}
+                  />
+                </button>
+
+                <div
+                  className={`dropdown-card ${showMenu ? "show-dropdown" : ""}`}
+                >
+                  <div className="dropdown-profile">
+                    <img src={user.avatar || "/no-photo.png"} alt="" />
+
+                    <div>
+                      <h6>
+                        {user.first_name} {user.last_name}
+                      </h6>
+
+                      <span>مدیریت حساب</span>
+                    </div>
+                  </div>
+
+                  <div className="dropdown-divider" />
+
+                  <MenuItem
+                    to="/profile"
+                    icon="fa-regular fa-user"
+                    label="پروفایل"
+                    onClick={closeMenu}
+                  />
+
+                  <MenuItem
+                    to="/bookings"
+                    icon="fa-regular fa-calendar-check"
+                    label="رزروهای من"
+                    onClick={closeMenu}
+                  />
+
+                  <MenuItem
+                    to="/favorites"
+                    icon="fa-regular fa-heart"
+                    label="علاقه‌مندی‌ها"
+                    onClick={closeMenu}
+                  />
+
+                  <div className="dropdown-divider" />
+
+                  <button
+                    className="logout-btn"
+                    onClick={() => {
+                      closeMenu();
+                      setShowLogoutModal(true);
+                    }}
+                  >
+                    <i className="fa-solid fa-right-from-bracket" />
+                    خروج از حساب
+                  </button>
                 </div>
-              </ul>
+              </div>
             )}
-          </div>
-        </nav>
-      </div>
-    </div>
+          </nav>
+        </div>
+      </header>
+
+      {showLogoutModal && (
+        <LogoutModal onClose={() => setShowLogoutModal(false)} />
+      )}
+    </>
+  );
+}
+
+function MenuItem({ to, icon, label, onClick }) {
+  return (
+    <Link to={to} className="dropdown-link" onClick={onClick}>
+      <i className={icon} />
+
+      <span>{label}</span>
+    </Link>
   );
 }
