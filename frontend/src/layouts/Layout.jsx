@@ -1,4 +1,3 @@
-import HeadTag from "./HeadTag";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
@@ -6,7 +5,6 @@ import { Outlet } from "react-router-dom";
 export default function Layout() {
   return (
     <>
-      <HeadTag />
       <Header />
       <div className="clearfix" />
       <div id="main-wrapper">
