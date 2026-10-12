@@ -2,11 +2,9 @@ import { useBooking } from "../../hooks/useBooking";
 import BookingNotice from "./BookingNotice";
 import LoadingButton from "../LoadingButton";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 export default function BookerInformation({ user, bookingData }) {
   const [createBooking] = useBooking(bookingData);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   async function handleBooking(e) {
     e.preventDefault();
@@ -14,8 +12,7 @@ export default function BookerInformation({ user, bookingData }) {
     setIsLoading(true);
 
     try {
-      const res = await createBooking();
-      navigate('/booking-success', {state:res})
+      await createBooking();
     } finally {
       setIsLoading(false);
     }
@@ -82,13 +79,6 @@ export default function BookerInformation({ user, bookingData }) {
               isLoading={isLoading}
               onClick={handleBooking}
             />
-
-            {/* <button
-              className="btn btn-primary w-100 py-3 rounded-3 fw-semibold"
-              onClick={handleBooking}
-            >
-              تایید رزرو و ادامه پرداخت
-            </button> */}
           </div>
         </div>
       </div>

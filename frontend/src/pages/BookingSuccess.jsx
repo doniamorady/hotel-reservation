@@ -1,9 +1,13 @@
-import { useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toPersian } from "../utils/date";
+import { useGetBooking } from "../hooks/useBooking";
+import Loader from "../components/Loader";
 
 export default function BookingSuccess() {
-  const { state } = useLocation();
-  const data = state?.data;
+  const { bookingId } = useParams();
+  const { data, isLoading } = useGetBooking(bookingId);
+  const navigate = useNavigate();
+  if (isLoading) return <Loader />;
   return (
     <div className="container py-5" dir="rtl">
       <div className="row justify-content-center">
@@ -154,6 +158,7 @@ export default function BookingSuccess() {
                   fontSize: "14px",
                   boxShadow: "0 8px 22px rgba(32,178,107,.30)",
                 }}
+                onClick={()=>navigate('/bookings')}
               >
                 مشاهده رزروهای من
               </button>

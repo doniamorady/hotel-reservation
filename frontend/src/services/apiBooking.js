@@ -2,7 +2,8 @@ import api from "./api";
 
 export async function createBooking(id, data) {
   const response = await api.post(`/bookings/room/${id}`, data);
-  return response.data;
+  const paymentUrl = response.data.payment_url;
+  window.location.href = paymentUrl;
 }
 
 export async function availabilityRoom(id, data) {
@@ -11,6 +12,11 @@ export async function availabilityRoom(id, data) {
 }
 
 export async function myBookings() {
-  const res =await api.get("/bookings");
+  const res = await api.get("/bookings");
   return res.data.data;
+}
+
+export async function getBooking(id) {
+  const res = await api.get(`/bookings/${id}`);
+  return res.data;
 }

@@ -3,6 +3,7 @@ import {
   createBooking as createBookingApi,
   myBookings,
 } from "../services/apiBooking";
+import { getBooking } from "../services/apiRoom";
 
 export function useBooking(bookingData) {
   async function createBooking() {
@@ -15,7 +16,6 @@ export function useBooking(bookingData) {
 
     try {
       const res = await createBookingApi(bookingData.room_id, bookingPayload);
-
       return res;
     } catch (error) {
       console.log(error.response.data);
@@ -29,5 +29,12 @@ export function useGetMyBooking() {
   return useQuery({
     queryKey: ["myBookings"],
     queryFn: myBookings,
+  });
+}
+
+export function useGetBooking(id) {
+  return useQuery({
+    queryKey: ["booking"],
+    queryFn: () => getBooking(id),
   });
 }
