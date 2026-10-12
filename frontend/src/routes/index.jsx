@@ -12,6 +12,7 @@ import Profile from "../pages/Profile";
 import ProtectedRoute from "./ProtectedRoute";
 import BookingSuccess from "../pages/BookingSuccess";
 import Favorites from "../pages/Favorites";
+import BookingCancelled from "../pages/BookingCancelled";
 
 export const router = createBrowserRouter([
   {
@@ -53,10 +54,6 @@ export const router = createBrowserRouter([
             element: <MyBooking />,
           },
           {
-            path: "booking-success",
-            element: <BookingSuccess />,
-          },
-          {
             path: "profile",
             element: <Profile />,
           },
@@ -81,5 +78,19 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+
+  {
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: "booking-success/:bookingId",
+        element: <BookingSuccess />,
+      },
+      {
+        path: "booking-cancelled",
+        element: <BookingCancelled />,
+      },
+    ],
   },
 ]);
