@@ -7,8 +7,12 @@ use App\Http\Requests\Api\Booking\CreateBookingRequest;
 use App\Http\Requests\Api\Booking\UpdateBookingRequest;
 use App\Http\Resources\BookingResource;
 use App\Models\Booking;
+use App\Models\Payment;
 use App\Models\Room;
+use App\Services\BookingPayment;
 use App\Services\BookingService;
+use App\Services\ZarinpalService;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -30,11 +34,10 @@ class BookingController extends Controller
      * 
      rce in storage.
      */
-    public function store(CreateBookingRequest $request, BookingService $bookingService, Room $room)
+    public function store(CreateBookingRequest $request, Room $room, BookingPayment $bookingPayment)
     {
         $data = $request->validated();
-        $booking = $bookingService->createBooking($data, $room);
-        return new BookingResource($booking);
+        return $bookingPayment->checkout($room, $data);
     }
 
 
