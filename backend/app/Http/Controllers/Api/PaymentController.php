@@ -34,7 +34,7 @@ class PaymentController extends Controller
     {
 
         if ($request->Status !== 'OK'){
-            return "Payment cancelled";
+            return redirect('http://localhost:5173/booking-cancelled');
         } 
 
         $payment = Payment::where('authority', $request->Authority)->firstOrFail();
