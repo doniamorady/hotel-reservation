@@ -17,15 +17,16 @@ return new class extends Migration
             $table->date('end_date');
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate();
             $table->foreignId('room_id')->constrained('rooms')->cascadeOnUpdate();
-            $table->unsignedTinyInteger('num_nights')->default(1); 
+            $table->unsignedTinyInteger('num_nights')->default(1);
             $table->string('status')->default('pending')->comment('pending, check_in, check_out, cacelled, expired');
-            $table->unsignedTinyInteger('num_guests'); 
+            $table->unsignedTinyInteger('num_guests');
             $table->boolean('has_breakfast')->default(false);
             $table->unsignedBigInteger('breakfast_unit_price');
             $table->unsignedBigInteger('total_breakfast_price')->default(0);
             $table->unsignedBigInteger('room_unit_price');
             $table->unsignedBigInteger('total_room_price');
             $table->unsignedBigInteger('total_price');
+            $table->timestamp('expired_at')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
         });

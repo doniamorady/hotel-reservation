@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BedController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\FavoriteController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\Api\SettingController;
@@ -22,7 +23,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
-    
+
     Route::get('/favorites', [FavoriteController::class, 'showFavorites']);
     Route::get('/is-favorite/{room}', [FavoriteController::class, 'isFavorite']);
     Route::post('/favorite/{room}', [FavoriteController::class, 'addToFavorite']);
@@ -33,9 +34,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/', [ProfileController::class, 'updateProfile']);
     });
 
-    Route::prefix('comments')->group(function () {
-        Route::get('/', [CommentController::class, 'index']);
-    });
 
     Route::prefix('bookings')->group(function () {
         Route::get('/', [BookingController::class, 'index']);
@@ -43,6 +41,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/{booking}', [BookingController::class, 'show']);
         Route::put('/{booking}/add-breakfast', [BookingController::class, 'addBreakfast']);
     });
+
+    Route::post('payment/pay', [PaymentController::class, 'pay']);
 
     Route::post('rooms/{room}/comment', [RoomController::class, 'commentStore']);
 
@@ -79,6 +79,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         });
     });
 });
+
+Route::get('payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
+
 
 
 Route::prefix('rooms')->group(function () {

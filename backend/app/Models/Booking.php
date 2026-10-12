@@ -9,7 +9,7 @@ use Morilog\Jalali\Jalalian;
 class Booking extends Model
 {
     use SoftDeletes;
-    
+
     protected $guarded = ['id'];
 
     public function user()
@@ -21,13 +21,19 @@ class Booking extends Model
     {
         return $this->belongsTo(Room::class);
     }
-    
-    public function getStartDateJalaliAttribute(){
+
+    public function getStartDateJalaliAttribute()
+    {
         return Jalalian::fromDateTime($this->start_date)->format('Y/m/d');
     }
-    
-    public function getEndDateJalaliAttribute(){
-                return Jalalian::fromDateTime($this->end_date)->format('Y/m/d');
 
+    public function getEndDateJalaliAttribute()
+    {
+        return Jalalian::fromDateTime($this->end_date)->format('Y/m/d');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }
