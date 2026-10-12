@@ -11,12 +11,17 @@ export async function availabilityRoom(id, data) {
   return res.data;
 }
 
-export async function myBookings() {
-  const res = await api.get("/bookings");
-  return res.data.data;
+export async function myBookings(status) {
+  const { data } = await api.get(`/bookings/status/${status}`);
+  return data.data;
 }
 
 export async function getBooking(id) {
   const res = await api.get(`/bookings/${id}`);
+  return res.data;
+}
+
+export async function statusBookings() {
+  const res = await api.get(`/bookings/all-status`);
   return res.data;
 }

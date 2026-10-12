@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   createBooking as createBookingApi,
   myBookings,
+  statusBookings,
 } from "../services/apiBooking";
 import { getBooking } from "../services/apiRoom";
 
@@ -25,10 +26,10 @@ export function useBooking(bookingData) {
   return [createBooking];
 }
 
-export function useGetMyBooking() {
+export function useGetMyBooking(status) {
   return useQuery({
-    queryKey: ["myBookings"],
-    queryFn: myBookings,
+    queryKey: ["myBookings", status],
+    queryFn: () => myBookings(status),
   });
 }
 
@@ -36,5 +37,12 @@ export function useGetBooking(id) {
   return useQuery({
     queryKey: ["booking"],
     queryFn: () => getBooking(id),
+  });
+}
+
+export function useStatusBookings() {
+  return useQuery({
+    queryKey: ["booking"],
+    queryFn: statusBookings,
   });
 }

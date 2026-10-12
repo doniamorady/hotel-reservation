@@ -1,4 +1,4 @@
-export default function Header({ length }) {
+export default function Header({ length, statusBookings, status, setStatus }) {
   const filters = [
     {
       id: "all",
@@ -7,23 +7,33 @@ export default function Header({ length }) {
     },
     {
       id: "pending",
-      title: "در انتظار",
-      count: 2,
+      title: "در انتظار پرداخت",
+      count: statusBookings?.pending ?? 0,
     },
     {
       id: "confirmed",
       title: "تایید شده",
-      count: 8,
+      count: statusBookings?.confirmed ?? 0,
+    },
+    {
+      id: "check_in",
+      title: "در حال اقامت",
+      count: statusBookings?.checkIn ?? 0,
+    },
+    {
+      id: "check_out",
+      title: "پایان اقامت",
+      count: statusBookings?.checkOut ?? 0,
     },
     {
       id: "cancelled",
       title: "لغو شده",
-      count: 1,
+      count: statusBookings?.cancelled ?? 0,
     },
     {
-      id: "completed",
-      title: "پایان یافته",
-      count: 5,
+      id: "expired",
+      title: "منقضی شده",
+      count: statusBookings?.expired ?? 0,
     },
   ];
 
@@ -35,8 +45,6 @@ export default function Header({ length }) {
       }}
     >
       <div className="p-3 p-md-4">
-        {/* Header Top */}
-
         <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
           <div>
             <h5
@@ -74,24 +82,26 @@ export default function Header({ length }) {
           </div>
         </div>
 
-        {/* Filters */}
-
         <div
           className="d-flex flex-wrap gap-3 mt-4 pt-3"
           style={{
             borderTop: "1px solid #f0f2f5",
           }}
         >
-          {filters.map((item, index) => (
+          {filters.map((item) => (
             <button
               key={item.id}
+              onClick={() => setStatus(item.id)}
               className="d-flex align-items-center gap-2 rounded-pill"
               style={{
-                border: index === 0 ? "1px solid #1d6fdc" : "1px solid #e4e9f0",
+                border:
+                  status === item.id
+                    ? "1px solid #1d6fdc"
+                    : "1px solid #e4e9fitem.id",
 
-                background: index === 0 ? "#1d6fdc" : "#fff",
+                background: status === item.id ? "#1d6fdc" : "#fff",
 
-                color: index === 0 ? "#fff" : "#556070",
+                color: status === item.id ? "#fff" : "#556070",
 
                 padding: "6px 12px",
 
@@ -108,9 +118,10 @@ export default function Header({ length }) {
                   width: "19px",
                   height: "19px",
 
-                  background: index === 0 ? "rgba(255,255,255,.18)" : "#f1f4f8",
+                  background:
+                    status === item.id ? "rgba(255,255,255,.18)" : "#f1f4f8",
 
-                  color: index === 0 ? "#fff" : "#667085",
+                  color: status === item.id ? "#fff" : "#667085",
 
                   fontSize: "10px",
                 }}
