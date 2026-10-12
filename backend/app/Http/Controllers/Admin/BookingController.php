@@ -7,17 +7,13 @@ use App\Http\Requests\Api\Booking\CreateBookingRequest;
 use App\Http\Requests\Api\Booking\UpdateBookingRequest;
 use App\Models\Booking;
 use App\Models\Room;
-use Illuminate\Support\Str;
-use App\Models\User;
 use App\Services\BookingService;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
     public function index()
     {
-        $user = User::find(1);
+        $user = auth()->user();
 
         if ($user && $user->hasRole('admin')) {
             $bookings = Booking::with(['user', 'room'])->latest()->get();

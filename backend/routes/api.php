@@ -36,7 +36,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
     Route::prefix('bookings')->group(function () {
-        Route::get('/', [BookingController::class, 'index']);
+        Route::get('/status/{status}', [BookingController::class, 'index']);
+        Route::get('/all-status', [BookingController::class, 'allStatus']);
         Route::post('/room/{room}', [BookingController::class, 'store']);
         Route::get('/{booking}', [BookingController::class, 'show']);
         Route::put('/{booking}/add-breakfast', [BookingController::class, 'addBreakfast']);

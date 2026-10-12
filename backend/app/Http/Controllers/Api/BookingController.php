@@ -7,24 +7,24 @@ use App\Http\Requests\Api\Booking\CreateBookingRequest;
 use App\Http\Requests\Api\Booking\UpdateBookingRequest;
 use App\Http\Resources\BookingResource;
 use App\Models\Booking;
-use App\Models\Payment;
 use App\Models\Room;
 use App\Services\BookingPayment;
 use App\Services\BookingService;
-use App\Services\ZarinpalService;
-use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
 
-    public function index()
+    public function index($status)
     {
         $user = auth()->user();
-        if ($user->hasRole('admin'))
-            $bookings = Booking::with(['user', 'room'])->get();
-        else {
-            $bookings = $user->bookings()->with(['user', 'room'])->get();
-        }
+        
+        $query = $user->bookings()->with(['user', 'room']);
+        if ($status !== 'all')
+            $query->where('status', $status);
+        
+       
+        $bookings = $query->get();
+
         return BookingResource::collection($bookings);
     }
 
@@ -62,5 +62,20 @@ class BookingController extends Controller
         $data = $request->validated();
         $booking->update($data);
         return response()->json(['message' => 'status successfully updated', 'booking' =>  new BookingResource($booking)]);
+    }
+
+    public function allStatus()
+    {
+        $status = auth()->user()->bookings()->selectRaw(
+            "
+            Count(CASE WHEN status= 'pending' THEN 1 END) as pending,
+            Count(CASE WHEN status= 'confirmed' THEN 1 END) as confirmed,
+            Count(CASE WHEN status= 'check_in' THEN 1 END) as checkIn,
+            Count(CASE WHEN status= 'check_out' THEN 1 END) as checkOut,
+            Count(CASE WHEN status= 'cancelled' THEN 1 END) as cancelled,
+            Count(CASE WHEN status= 'expired' THEN 1 END) as expired
+            "
+        )->first();
+        return response()->json($status);
     }
 }
