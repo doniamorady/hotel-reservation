@@ -85,4 +85,15 @@ class BookingService
         $booking->update(['status' => $status]);
         return $booking;
     }
+
+
+    public function expirePendingBookings()
+    {
+        $bookings = Booking::where('status', 'pending')->where('expired_at', '<=', now())->get();
+        foreach ($bookings as $booking) {
+            $booking->update(['status' => 'expired']);
+            $booking->payments()->update(['status' => 'cancelled']);
+        }
+        return $bookings->count();
+    }
 }
